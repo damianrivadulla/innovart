@@ -55,7 +55,6 @@ export class HomeComponent extends BaseComponentService implements OnInit {
     this.apollo.watchQuery({
       query: gql`${QUERY_HOME}`
     }).valueChanges.subscribe((result: any) => {
-      console.log("@==>", result.data.page.homeFields);
       this.home = result.data.page.homeFields;
     });
   }

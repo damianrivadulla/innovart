@@ -1,5 +1,10 @@
-<app-header *ngIf="portfolio"></app-header>
-<app-layout *ngIf="portfolio">
+<div *ngIf="portfolio" 
+  [style.--text-color]="portfolio?.portfolioSingleFields?.textColor"
+  [style.--background-color]="portfolio?.portfolioSingleFields?.backgroundColor"
+  [style.--body-bg]="portfolio?.portfolioSingleFields?.backgroundColor"
+  [style.--button-text-color]="portfolio?.portfolioSingleFields?.buttonTextColor">
+<app-header></app-header>
+<app-layout>
   <div class="wrapper x-hidden">
     <app-line-reveal>
       <div class="line horizontal"></div>
@@ -7,7 +12,7 @@
   </div>
   <div
     class="wrapper wrapper--bottom-60 wrapper--m-bottom-25 wrapper--m-top-0 min-h-400 d-flex flex-column justify-content-between gap-75">
-    <div class="d-flex justify-content-between">
+    <div class="d-flex justify-content-between gap-30">
       <div class="container container--medium">
         <app-paragraph-reveal classSelector="title">
           <h1 class="title text-uppercase" [innerHTML]="portfolio.portfolioSingleFields?.title">
@@ -16,7 +21,7 @@
       </div>
       <app-paragraph-reveal classSelector="title" class="x-hidden">
         <h2 class="title w-min text-uppercase text-end">
-          <a class="link link--black">Next<br>Projects</a>
+          <a class="link link--black">Next<br>Project</a>
         </h2>
       </app-paragraph-reveal>
     </div>
@@ -84,9 +89,10 @@
   <div class="wrapper wrapper--bottom-30 wrapper--m-top-75 wrapper--m-bottom-50">
     <div class="container d-flex justify-content-tablet-end">
       <h2 class="title title-s w-min text-uppercase text-tablet-end">
-        <a class="link link--black">Next<br>Projects</a>
+        <a class="link link--black">Next<br>Project</a>
       </h2>
     </div>
   </div>
 </app-layout>
-<app-footer *ngIf="portfolio"></app-footer>
+<app-footer></app-footer>
+</div>

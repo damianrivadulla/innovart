@@ -1,12 +1,40 @@
 @import "../../../variables";
 
+// Variables CSS personalizadas para colores dinámicos desde GraphQL
+:host {
+    --text-color: #000; // fallback por defecto
+    --background-color: #fff; // fallback por defecto
+    --button-text-color: #000; // fallback por defecto
+}
+
+// Aplicar colores dinámicos a los elementos
+.title {
+    color: var(--text-color);
+}
+
+.text {
+    color: var(--text-color);
+}
+
+.testimonial {
+    color: var(--text-color);
+}
+
+// Para botones (si los hay)
+.button,
+.link {
+    color: var(--button-text-color);
+}
+
 .images {
     display: flex;
     flex-direction: column;
     gap: 75px;
+
     @media (min-width: $mq-tablet) {
         gap: 60px;
         gap: 20px;
+
         &--left {
             max-width: 80%;
         }
@@ -26,7 +54,6 @@
     }
 }
 
-
 .testimonial {
     transition: all .5s;
     display: flex;
@@ -34,16 +61,11 @@
     gap: 20px;
     max-width: 925px;
     gap: 35px;
-    @media (min-width: $mq-tablet) {
-        
-    }
 
     @media (min-width: $mq-desktop) {
         gap: 70px;
         padding-left: 75px;
     }
-
-    color: $black;
 
     .testimonial-quote {
         margin-bottom: 0;
@@ -54,12 +76,5 @@
         flex-direction: column;
         gap: 5px;
 
-        .testimonial-name {}
-
-        .testimonial-title {}
-
-        .testimonial-company {
-            color: $grey;
-        }
     }
 }

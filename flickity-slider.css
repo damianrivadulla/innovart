@@ -1,0 +1,142 @@
+html {
+    margin-top: 0 !important;
+}
+
+/* Flickity Slider CSS para WordPress */
+
+/* Flickity CSS básico */
+.main-carousel {
+    height: calc(100svh - 239px);
+    overflow: hidden;
+}
+
+.single-carousel {
+    overflow: hidden;
+    height: calc(100svh - 96px) !important;
+}
+
+@media (min-width: 768px) {
+    .single-carousel {
+        height: 100svh !important;
+    }
+}
+
+.carousel-cell {
+    margin-right: 8px;
+}
+
+.carousel-cell img {
+    width: auto!important;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-cell .project-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.carousel-cell .project-link img {
+    transition: transform 0.3s ease;
+}
+
+.main-carousel .carousel-cell .project-link img {
+    height: calc(100svh - 239px) !important;
+}
+
+.single-carousel .carousel-cell img {
+    height: calc(100svh - 96px) !important;
+}
+
+@media (min-width: 768px) {
+    .single-carousel .carousel-cell img {
+        height: 100svh !important;
+    }
+}
+
+.carousel-cell .project-link:hover img {
+    transform: scale(1.05);
+}
+
+/* Flickity base styles */
+.flickity-enabled {
+    position: relative;
+}
+
+.flickity-enabled:focus {
+    outline: none;
+}
+
+.flickity-viewport {
+    overflow: visible;
+    position: relative;
+}
+
+.main-carousel .flickity-viewport {
+    height: calc(100svh - 239px) !important;
+}
+
+.single-carousel .flickity-viewport {
+    height: calc(100svh - 96px) !important;
+}
+
+@media (min-width: 768px) {
+    .single-carousel .flickity-viewport {
+        height: 100svh !important;
+    }
+}
+
+/* Estilos para template de Elementor */
+.single-carousel .template-cell {
+    width: 280px;
+    max-width: 280px !important;
+    height: 100%;
+}
+
+@media (min-width: 768px) {
+    .single-carousel .template-cell {
+        width: 380px;
+        max-width: 380px !important;
+    }
+}
+
+@media (min-width: 1024px) {
+    .single-carousel .template-cell {
+        width: 430px;
+        max-width: 430px !important;
+    }
+}
+
+.single-carousel .template-cell img {
+    width: auto;
+    height: auto !important;
+}
+
+
+.single-carousel .template-cell {
+    height: calc(100svh - 96px) !important;
+}
+
+.single-carousel .template-cell>.elementor {
+    height: calc(100svh - 96px) !important;
+}
+
+@media (min-width: 768px) {
+    .single-carousel .template-cell {
+        height: 100svh;
+    }
+
+    .single-carousel .template-cell>.elementor {
+        height: 100%;
+    }
+}
+
+.slider-container {
+    overflow: hidden !important;
+}
+
+.slider-container .single-carousel {
+    overflow: visible !important;
+}

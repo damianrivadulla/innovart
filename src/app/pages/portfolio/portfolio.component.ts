@@ -61,7 +61,8 @@ export class PortfolioComponent extends BaseComponentService implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadFirstN();
+    //this.loadFirstN();
+    this.loadFirstNv1();
     this.loadPageInfo();
   }
 

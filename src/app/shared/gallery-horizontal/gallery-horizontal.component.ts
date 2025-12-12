@@ -59,7 +59,7 @@ export class GalleryHorizontalComponent implements AfterViewInit {
 
     setTimeout(() => {
       this.galleryEffect.resize();
-    }, 100);
+    }, 500);
 
     setTimeout(() => {
       // Get total number of slides

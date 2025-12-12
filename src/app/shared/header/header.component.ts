@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { gql } from '@apollo/client/core';
-import { NgIf, NgForOf, NgOptimizedImage, NgClass } from '@angular/common';
+import { NgForOf, NgClass } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { QUERY_HEADER } from '../../queries/header';
 import ScrollReveal from 'scrollreveal';
@@ -12,10 +12,8 @@ import ScrollReveal from 'scrollreveal';
   standalone: true,
   imports: [
     RouterLink,
-    NgIf,
     NgClass,
-    NgForOf,
-    NgOptimizedImage
+    NgForOf
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -34,7 +32,6 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     this.apollo.watchQuery({
       query: gql`${QUERY_HEADER}`
     }).valueChanges.subscribe((result: any) => {
-      console.log("@==>", result);
       const mainMenu = result.data.menus.nodes.find((item: any) => item.name === "Main Menu");
       this.menu = mainMenu.menuItems.nodes;
       this.classMenu = "show";
@@ -66,7 +63,5 @@ export class HeaderComponent implements OnInit, AfterViewInit {
       this.menuActive = true;
       this.classCss = "active";
     }
-    console.log(this.classCss);
-    console.log(this.menuActive);
   }
 }

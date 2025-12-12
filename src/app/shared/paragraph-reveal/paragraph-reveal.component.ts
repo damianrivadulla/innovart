@@ -39,10 +39,19 @@ export class ParagraphRevealComponent implements AfterViewInit {
       }
 
       const element = this.container.nativeElement.querySelector('.' + this.classSelector);
-      if (element) {
-        const splitInstance = new SplitType(element as HTMLElement, {types: 'lines', lineClass: 'lineChild'});
-        const lines = splitInstance.lines;
-        lines!.forEach(line => {
+      if (!element) {
+        return;
+      }
+
+      const splitInstance = new SplitType(element as HTMLElement, {types: 'lines', lineClass: 'lineChild'});
+      const lines = splitInstance.lines || [];
+
+      if (!lines.length) {
+        splitInstance.revert();
+        return;
+      }
+
+      lines.forEach(line => {
           const lineParent = this.renderer.createElement('div');
           this.renderer.addClass(lineParent, 'lineParent');
           this.renderer.setStyle(lineParent, 'overflow', 'hidden');
@@ -50,9 +59,17 @@ export class ParagraphRevealComponent implements AfterViewInit {
           line.parentNode?.replaceChild(lineParent, line);
           lineParent.appendChild(line);
         });
-        const childs = element.querySelectorAll('.lineChild') as NodeListOf<HTMLElement>;
-        this.textAnim = gsap.fromTo(
-          childs,
+
+      const childs = element.querySelectorAll('.lineChild') as NodeListOf<HTMLElement>;
+      const targets = Array.from(childs);
+
+      if (!targets.length) {
+        splitInstance.revert();
+        return;
+      }
+
+      this.textAnim = gsap.fromTo(
+          targets,
           {yPercent: 100},
           {
             yPercent: 0,
@@ -74,7 +91,6 @@ export class ParagraphRevealComponent implements AfterViewInit {
         setTimeout(() => {
           ScrollTrigger.refresh();
         }, 100);
-      }
     });
   }
 

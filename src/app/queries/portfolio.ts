@@ -149,7 +149,7 @@ export const QUERY_PORTFOLIO_INFO = `
 
 export const QUERY_PORTFOLIO = (noPosts: any, afterKey: any) => `
   query PortfolioPosts {
-    portfolioCompanies(first: ${noPosts}, where: {status: PUBLISH}, after: "${afterKey ? afterKey : ''}") {
+    portfolioCompanies(first: ${noPosts}, where: {status: PUBLISH, orderby: {order: ASC, field: MENU_ORDER}}, after: "${afterKey ? afterKey : ''}") {
       edges {
         node {
           title

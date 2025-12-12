@@ -57,7 +57,7 @@
   width: 100%;
 }
 .header .wrapper {
-  background-color: var(--body-bg);
+  background-color: var(--background-color, var(--body-bg));
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -78,7 +78,7 @@
   background-color: none;
   background: unset;
   border: none;
-  color: #000;
+  color: var(--text-color, #000);
 }
 .header .js-mm-toggle .close {
   display: none;

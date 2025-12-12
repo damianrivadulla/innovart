@@ -39,26 +39,25 @@
       <div class="nav">
         <h4 class="text-xs text-grey">SECTIONS</h4>
         <ul class="list">
-          <li class="menu-item"><a routerLink="/portfolio">Portfolio</a></li>
-          <li class="menu-item"><a routerLink="/company">Company</a></li>
-          <li class="menu-item"><a routerLink="/methodology">Methodology</a></li>
-          <li class="menu-item"><a routerLink="/contact">Contact</a></li>
+          <ng-container *ngFor="let item of menuB">
+            <li class="menu-item"><a class="link" [routerLink]="item.uri">{{ item.label }}</a></li>
+          </ng-container>
         </ul>
       </div>
       <div class="nav">
         <h4 class="text-xs text-grey">SOCIAL</h4>
         <ul class="list">
-          <li class="menu-item"><a href="#" target="_blank">Instagram</a></li>
-          <li class="menu-item"><a href="#" target="_blank">Facebook</a></li>
-          <li class="menu-item"><a href="#" target="_blank">Vimeo</a></li>
+          <ng-container *ngFor="let item of footerInfo?.socialMedia">
+            <li class="menu-item"><a class="link" href="{{ item.socialMediaItem.url }}" target="_blank">{{ item.socialMediaItem.title }}</a></li>
+          </ng-container>
         </ul>
       </div>
       <div class="nav">
         <h4 class="text-xs text-grey">RESOURCES</h4>
         <ul class="list">
-          <li class="menu-item"><a routerLink="/privacy-policy">Privacy Policy</a></li>
-          <li class="menu-item"><a routerLink="/terms-of-sale">Terms of Sale</a></li>
-          <li class="menu-item"><a routerLink="/contact">Work with Us</a></li>
+          <ng-container *ngFor="let item of menuA">
+            <li class="menu-item"><a class="link" [routerLink]="item.uri">{{ item.label }}</a></li>
+          </ng-container>
         </ul>
       </div>
     </div>

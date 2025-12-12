@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { LineRevealComponent } from '../line-reveal/line-reveal.component';
 import { ParagraphRevealComponent } from '../paragraph-reveal/paragraph-reveal.component';
+import { NgForOf } from '@angular/common';
 import ScrollReveal from 'scrollreveal';
 import { gql } from '@apollo/client/core';
 import { QUERY_HEADER } from '../../queries/header';
@@ -11,6 +13,8 @@ import { Apollo } from 'apollo-angular';
   selector: 'app-footer',
   standalone: true,
   imports: [
+    RouterLink,
+    NgForOf,
     LineRevealComponent,
     ParagraphRevealComponent
   ],
@@ -19,9 +23,10 @@ import { Apollo } from 'apollo-angular';
 })
 
 export class FooterComponent implements OnInit, AfterViewInit {
-  info: any = null;
   footerInfo: any = null;
-
+  menuA: any = null
+  menuB: any = null
+  
   constructor(private readonly apollo: Apollo) {
   }
 
@@ -29,9 +34,11 @@ export class FooterComponent implements OnInit, AfterViewInit {
     this.apollo.watchQuery({
       query: gql`${QUERY_HEADER}`
     }).valueChanges.subscribe((result: any) => {
-      console.log("@==>", result);
       this.footerInfo = result.data.globalContent.globalFields;
-      this.info = result.data.menus.nodes;
+      const mainMenuA = result.data.menus.nodes.find((item: any) => item.name === "Footer Menu 1");
+      this.menuA = mainMenuA.menuItems.nodes;
+      const mainMenuB = result.data.menus.nodes.find((item: any) => item.name === "Footer Menu 2");
+      this.menuB = mainMenuB.menuItems.nodes;
     });
   }
 

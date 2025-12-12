@@ -21,6 +21,7 @@ export class BaseComponentService {
     const bodyElement = document.body;
     const className = this.getComponentSelector().replace('app-', '');
     const uriSegments = this.router.url.split('/').join(' ');
-    this.renderer.setAttribute(bodyElement, 'class', `${className} ${uriSegments}`);
+    //this.renderer.setAttribute(bodyElement, 'class', `${className} ${uriSegments}`);
+    this.renderer.setAttribute(bodyElement, 'class', `${uriSegments}`);
   }
 }

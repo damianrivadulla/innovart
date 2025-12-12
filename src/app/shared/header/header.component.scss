@@ -6,16 +6,26 @@
     width: 100%;
 
     .wrapper {
-        background-color: var(--body-bg);
+        background-color: var(--background-color, var(--body-bg));
         display: flex;
         justify-content: space-between;
-        align-items: flex-start;
+        align-items: center;
     }
 
     .logo {
         width: 140px;
         z-index: 2;
         transition: all 1s;
+        svg {
+            width: 100%;
+        }
+        rect,
+        path,
+        polygon,
+        circle {
+            fill: var(--text-color, $black);
+            transition: fill 0.3s ease;
+        }
         @media (max-width: ($mq-tablet - 1px)) {
             &.active {
                 -webkit-filter: invert(100%);
@@ -31,7 +41,7 @@
         background-color: none;
         background: unset;
         border: none;
-        color: $black;
+        color: var(--text-color, $black);
 
         .close {
             display: none;
@@ -72,14 +82,16 @@
                 line-height: var(--body-line-height);
 
                 .link {
-                    color: $black;
+                    color: var(--text-color, $black);
 
                     &.active {
-                        color: $grey;
+                        color: var(--text-color, $grey);
+                        opacity: 0.4;
                     }
 
                     &:hover {
-                        color: $grey;
+                        color: var(--text-color, $grey);
+                        opacity: 0.4;
                     }
                 }
             }
@@ -94,7 +106,7 @@
         background-color: $carbon;
         position: absolute;
         height: 0;
-        transition: all 1s ease-in-out;
+        transition: all 1.5s ease-in-out;
         overflow: hidden;
 
         .vertical {
@@ -145,7 +157,9 @@
         }
 
         &.active {
-            height: 100vh;
+            height: 100dvh;
+            opacity: 1;
+            transition: all 1s ease-in-out;
 
             .vertical {
 

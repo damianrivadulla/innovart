@@ -5,6 +5,27 @@
   flex-direction: column;
   justify-content: space-between !important;
   align-items: unset !important;
+  color: var(--text-color, $black);
+
+  p,
+  h4,
+  .text,
+  .text-xs,
+  .text-s,
+  .text-m,
+  .title-s {
+    color: var(--text-color, $black);
+  }
+
+  a {
+    color: var(--text-color, $black);
+    transition: color 0.3s ease, opacity 0.3s ease;
+
+    &:hover,
+    &.active {
+      opacity: 0.6;
+    }
+  }
 
   .footer-menu{
     align-items: flex-start;
@@ -28,6 +49,14 @@
 
       .footer-logo {
         max-width: 110px;
+
+        rect,
+        path,
+        polygon,
+        circle {
+          fill: var(--text-color, $black) !important;
+          transition: fill 0.3s ease;
+        }
       }
     }
 
@@ -86,11 +115,35 @@
       }
     }
 
+    .btn {
+      background-color: var(--text-color, $black);
+      border-color: var(--text-color, $black);
+      color: var(--background-color, var(--body-bg));
+      transition: all .5s;
+
+      svg {
+        path {
+          fill: var(--background-color, var(--body-bg)) !important;
+        }
+      }
+
+      &:hover {
+        background-color: var(--background-color, var(--body-bg));
+        color: var(--text-color, $black);
+
+        svg {
+          path {
+            fill: var(--text-color, $black) !important;
+          }
+        }
+      }
+    }
+
     &.footer-copyright{
       align-items: flex-end;
     }
 
-    @media (max-width: $mq-tablet - 1px) {
+    @media (max-width: ($mq-tablet - 1px)) {
       &.footer-copyright {
         gap: 130px 10px;
         flex-wrap: wrap;
@@ -133,16 +186,7 @@
         a {
           font-size: inherit;
           line-height: inherit;
-          color: $black;
           text-decoration: none;
-
-          &:hover {
-            color: $grey;
-          }
-
-          &.active {
-            color: $grey;
-          }
         }
       }
     }

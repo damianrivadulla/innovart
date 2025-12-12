@@ -86,16 +86,27 @@
     cursor: pointer;
     display: block;
     width: 52px;
-    svg * {
-      transition: all .5s;
+    svg {
+      rect {
+        stroke: var(--text-color, #b9bab7) !important;
+      }
+      path {
+        fill: var(--text-color, #b9bab7) !important;
+      }
+      * {
+        transition: all .5s;
+      }
     }
     &:hover{
       svg{
-        rect{
-          stroke: $black!important;
+        rect,
+        g rect {
+          stroke: var(--background-color, $white) !important;
+          fill: var(--text-color, #b9bab7) !important;
         }
-        path{
-          fill: $black!important;
+        path,
+        g path {
+          fill: var(--background-color, $white) !important;
         }
       }
     }
