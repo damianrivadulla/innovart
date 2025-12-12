@@ -1,0 +1,121 @@
+:root {
+  --title-big-font-size: 36px;
+  --gutter: 1.5rem;
+  --title-font-size: 32px;
+  --title-s-font-size: 24px;
+  --body-font-size: 15px;
+  --body-m-font-size: 14px;
+  --body-s-font-size: 12px;
+  --body-xs-font-size: 10px;
+  --gutter: 1rem;
+  --body-font-family: "NeueHaasGrotDisp", sans-serif;
+  --body-font-weight: 400;
+  --body-line-height: 1.4em;
+  --body-letter-spacing: .03em;
+  --title-line-height: .97em;
+  --title-letter-spacing: .03em;
+  --title-s-line-height: 1.1em;
+  --title-s-letter-spacing: .035em;
+  --body-color: #000;
+  --body-bg: #eeefed;
+  --border: #b9bab7;
+  --padding-main: 80px;
+  --top-75: 75px;
+  --bottom-75: 75px;
+  --bottom-195: 195px;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --title-big-font-size: 7.5vw;
+    --title-font-size: 48px;
+    --title-s-font-size: 36px;
+    --body-font-size: 21px;
+    --body-m-font-size: 16px;
+    --gutter: 1.75rem;
+    --padding-main: 175px;
+  }
+}
+@media (min-width: 1200px) {
+  :root {
+    /*--title-big-font-size: 8.5vw;*/
+    --title-font-size: 64px;
+    --title-s-font-size: 48px;
+    --body-font-size: 25px;
+    --gutter: 1.75rem;
+    --padding-main: 175px;
+  }
+}
+@media (min-width: 1600px) {
+  :root {
+    --title-big-font-size: 120px;
+  }
+}
+.main-carousel {
+  height: 100%;
+}
+.main-carousel .carousel-cell {
+  /*margin-left: 25px;*/
+}
+@media (min-width: 768px) {
+  .main-carousel .carousel-cell {
+    margin-right: 25px;
+  }
+}
+.main-carousel .carousel-cell img {
+  width: calc(100% - 2px);
+  padding: 0 1px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 50vw;
+  min-height: 200px;
+  max-height: 400px;
+}
+@media (min-width: 1200px) {
+  .main-carousel .carousel-cell img {
+    height: 630px;
+    max-height: unset;
+  }
+}
+@media (min-width: 1200px) {
+  .main-carousel.big .carousel-cell img {
+    height: 800px;
+    max-height: unset;
+  }
+}
+.main-carousel .arrows {
+  display: flex;
+  gap: 10px;
+}
+.main-carousel .arrows.inside {
+  position: absolute;
+  bottom: 22px;
+  left: 22px;
+}
+.main-carousel .arrows.inside .arrow {
+  cursor: pointer;
+}
+.main-carousel .arrows.inside .arrow svg rect {
+  fill: #000 !important;
+  fill-opacity: 0;
+}
+.main-carousel .arrows.inside .arrow:hover svg rect {
+  fill-opacity: 1;
+}
+.main-carousel .arrows.outside {
+  margin-top: 22px;
+}
+.main-carousel .arrows.outside .arrow svg rect {
+  fill: #fff !important;
+  fill-opacity: 0;
+}
+.main-carousel .arrows.outside .arrow:hover svg rect {
+  fill-opacity: 1;
+}
+.main-carousel .arrows .arrow {
+  display: flex;
+  width: 52px;
+}
+.main-carousel .arrows .arrow svg * {
+  transition: all 0.5s;
+}/*# sourceMappingURL=gallery-horizontal.component.css.map */

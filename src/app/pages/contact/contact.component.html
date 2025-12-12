@@ -1,0 +1,186 @@
+<app-header *ngIf="contact"></app-header>
+<app-layout *ngIf="contact">
+  <div class="wrapper x-hidden">
+    <app-line-reveal>
+      <div class="line horizontal"></div>
+    </app-line-reveal>
+  </div>
+  <div
+    class="wrapper wrapper--x-gap-45 wrapper--bottom-30 wrapper--m-top-0 wrapper--m-bottom-75 d-flex flex-column justify-content-between gap-100">
+    <app-paragraph-reveal classSelector="title">
+      <h1 class="title text-uppercase text-white" [innerHTML]="contact?.contactFields?.title"></h1>
+    </app-paragraph-reveal>
+  </div>
+  <div class="wrapper wrapper--m-bottom-195">
+    <div class="form">
+      <form *ngIf="!success" [formGroup]="contactForm" (ngSubmit)="sendForm()">
+        <div class="d-grid grid-m-34 form-wrap form-wrap--extra form-radio ">
+          <div class="col-left x-hidden">
+          </div>
+          <div class="col-right">
+            <div class="align-inline">
+              <ng-container *ngFor="let item of contact.contactFields.contactFormSubjectOptions">
+                <div class="form-group">
+                  <input type="radio" formControlName="type" [id]="item.option" name="type" [value]="item.option" required>
+                  <label [for]="item.option">{{ item.option }}</label><br>
+                </div>
+              </ng-container>
+            </div>
+            <!--<ng-container *ngIf="formType?.invalid && (formType?.dirty || formType?.touched)">-->
+            <ng-container *ngIf="submitted && formType?.invalid">
+              <span class="form-error">Please select one option.</span>
+            </ng-container>
+          </div>
+        </div>
+        <app-line-reveal>
+          <div class="line horizontal"></div>
+        </app-line-reveal>
+        <div class="d-grid grid-m-34 form-wrap form-text">
+          <div class="col-left">
+            <label for="inputName">Name</label>
+          </div>
+          <div class="col-right">
+            <input type="text" formControlName="name" name="inputName" id="inputName" placeholder="Name *" required>
+            <!--<ng-container *ngIf="formName?.invalid && (formName?.dirty || formName?.touched)">-->
+            <ng-container *ngIf="submitted && formName?.invalid">
+              <span class="form-error">Please include your name.</span>
+            </ng-container>
+          </div>
+        </div>
+        <app-line-reveal>
+          <div class="line horizontal"></div>
+        </app-line-reveal>
+        <div class="d-grid grid-m-34 form-wrap">
+          <div class="col-left">
+            <label for="inputCompany">Company</label>
+          </div>
+          <div class="col-right">
+            <input type="text" formControlName="company" name="inputCompany" id="inputCompany" placeholder="Company *"
+                   required>
+            <!--<ng-container *ngIf="formCompany?.invalid && (formCompany?.dirty || formCompany?.touched)">-->
+            <ng-container *ngIf="submitted && formCompany?.invalid">
+              <span class="form-error">Please include your company.</span>
+            </ng-container>
+          </div>
+        </div>
+        <app-line-reveal>
+          <div class="line horizontal"></div>
+        </app-line-reveal>
+        <div class="d-grid grid-m-34 form-wrap form-text">
+          <div class="col-left">
+            <label for="inputPosition">Position</label>
+          </div>
+          <div class="col-right">
+            <input type="text" formControlName="position" name="inputPosition" id="inputPosition"
+                   placeholder="Position *" required>
+            <!--<ng-container *ngIf="formPosition?.invalid && (formPosition?.dirty || formPosition?.touched)">-->
+            <ng-container *ngIf="submitted && formPosition?.invalid">
+              <span class="form-error">Please include your position.</span>
+            </ng-container>
+          </div>
+        </div>
+        <app-line-reveal>
+          <div class="line horizontal"></div>
+        </app-line-reveal>
+        <div class="d-grid grid-m-34 form-wrap form-text">
+          <div class="col-left">
+            <label for="inputEmail">Email</label>
+          </div>
+          <div class="col-right">
+            <input type="email" formControlName="email" name="inputEmail" id="inputEmail" placeholder="Email *"
+                   required>
+            <!--<ng-container *ngIf="formEmail?.invalid && (formEmail?.dirty || formEmail?.touched)">-->
+            <ng-container *ngIf="submitted && formEmail?.invalid">
+              <span class="form-error" *ngIf="formEmail?.hasError('required')">Please include your email.</span>
+              <span class="form-error" *ngIf="formEmail?.hasError('email')">Please correct your email.</span>
+            </ng-container>
+          </div>
+        </div>
+        <app-line-reveal>
+          <div class="line horizontal"></div>
+        </app-line-reveal>
+        <div class="d-grid grid-m-34 form-wrap form-text">
+          <div class="col-left">
+            <label for="inputPhone">Phone</label>
+          </div>
+          <div class="col-right">
+            <input type="text" formControlName="phone" name="inputPhone" id="inputPhone" placeholder="Phone *" required>
+            <!--<ng-container *ngIf="formPhone?.invalid && (formPhone?.dirty || formPhone?.touched)">-->
+            <ng-container *ngIf="submitted && formPhone?.invalid">
+              <span class="form-error">Please inclue your phone.</span>
+            </ng-container>
+          </div>
+        </div>
+        <app-line-reveal>
+          <div class="line horizontal"></div>
+        </app-line-reveal>
+        <div class="d-grid grid-m-34 form-wrap form-select">
+          <div class="col-left">
+            <label for="inputHear">How did you hear from us?</label>
+          </div>
+          <div class="col-right">
+            <!-- contact?.contactFields?.howDidYouHearFromUs -->
+            <select formControlName="hear" name="inputHear" id="inputHear" required>
+              <option disabled selected value="">Select *</option>
+              <ng-container *ngFor="let item of contact.contactFields.howDidYouHearFromUs">
+                <option [value]="item.option">{{ item.option }}</option>
+              </ng-container>
+            </select>
+            <!--<ng-container *ngIf="formHear?.invalid && (formHear?.dirty || formHear?.touched)">-->
+            <ng-container *ngIf="submitted && formHear?.invalid">
+              <span class="form-error">Please select one option.</span>
+            </ng-container>
+          </div>
+        </div>
+        <app-line-reveal>
+          <div class="line horizontal"></div>
+        </app-line-reveal>
+        <div class="d-grid grid-m-34 form-wrap form-textarea">
+          <div class="col-left">
+            <label for="inputBrief">Brief/Need</label>
+          </div>
+          <div class="col-right">
+            <textarea formControlName="message" rows="3" name="inputBrief" id="inputBrief"
+                      placeholder="Enter a brief description of your need. 500 characters maximum. *"
+                      required></textarea>
+            <!--<ng-container *ngIf="formMessage?.invalid && (formMessage?.dirty || formMessage?.touched)">-->
+            <ng-container *ngIf="submitted && formMessage?.invalid">
+              <span class="form-error">Please include your Brief/Need.</span>
+            </ng-container>
+          </div>
+        </div>
+        <div class="wrapper wrapper--x-0 wrapper--m-top-75 wrapper--m-bottom-75">
+          <app-line-reveal>
+            <div class="line horizontal"></div>
+          </app-line-reveal>
+        </div>
+        <div class="d-grid grid-m-34 form-wrap form-wrap-m ">
+          <div class="col-left">
+            <p class="text-m text-white">{{ contact?.contactFields?.formNotice }}
+            </p>
+          </div>
+          <div class="col-right">
+            <button type="submit"
+                    class="btn btn--inverted btn--icon btn--small">{{ contact?.contactFields?.formButton }}
+              <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27.03 11.66">
+                <path
+                  d="M0,5.4h25.56c-.65-.85-1.31-1.7-2.06-2.7l-2.06-2.7h1.2l4.4,5.83-4.4,5.83h-1.2l2.06-2.7c.74-.98,1.41-1.85,2.05-2.69H0v-.87Z"
+                  style="fill:#000;"/>
+              </svg>
+            </button>
+          </div>
+        </div>   
+      </form>
+      <div *ngIf="submitted" class="d-grid grid-m-34 form-wrap form-wrap-m ">
+        <div class="col-left">
+        </div>
+        <div class="col-right">
+          <span class="form-error" *ngIf="submitted && !success">Please complete the required fields.</span>
+          <span class="form-alert" *ngIf="error">There was an error in the form, please send us an email to <a href="mailto:hello@innovart.us" target="_blank">hello&#64;innovart.us</a></span>
+        </div>
+      </div>          
+      <h4 class="title-s text-uppercase text-white" *ngIf="success">The form was sent successfully</h4>
+    </div>
+  </div>
+</app-layout>
+<app-footer *ngIf="contact"></app-footer>

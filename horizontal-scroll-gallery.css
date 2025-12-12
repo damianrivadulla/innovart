@@ -1,0 +1,189 @@
+/* Horizontal Scroll Gallery CSS para WordPress */
+/* Galería con scroll horizontal sin slider */
+
+.horizontal-scroll-gallery {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch; /* Scroll suave en iOS */
+    scrollbar-width: thin; /* Firefox */
+    scrollbar-color: #ccc transparent; /* Firefox */
+}
+
+/* Scrollbar personalizado para Webkit */
+.horizontal-scroll-gallery::-webkit-scrollbar {
+    height: 8px;
+}
+
+.horizontal-scroll-gallery::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+.horizontal-scroll-gallery::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.horizontal-scroll-gallery::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+.scroll-container {
+    display: flex;
+    gap: 15px;
+    padding: 10px 0;
+    min-width: max-content; /* Asegura que el contenido no se comprima */
+}
+
+@media (min-width: 768px) {
+    .scroll-container {
+        gap: 25px;
+    }
+}
+
+.gallery-item {
+    flex-shrink: 0; /* Evita que los elementos se compriman */
+    position: relative;
+}
+
+.gallery-item img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .gallery-item img {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .gallery-item img {
+        width: 300px;
+        height: 300px;
+    }
+}
+
+.gallery-item img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.gallery-link:hover {
+    text-decoration: none;
+}
+
+/* Variantes de altura */
+.horizontal-scroll-gallery.height-small .gallery-item img {
+    width: 150px;
+    height: 150px;
+}
+
+.horizontal-scroll-gallery.height-medium .gallery-item img {
+    width: 200px;
+    height: 200px;
+}
+
+.horizontal-scroll-gallery.height-large .gallery-item img {
+    width: 300px;
+    height: 300px;
+}
+
+/* Variante cuadrada */
+.horizontal-scroll-gallery.square .gallery-item img {
+    aspect-ratio: 1;
+}
+
+/* Variante rectangular */
+.horizontal-scroll-gallery.rectangular .gallery-item img {
+    aspect-ratio: 4/3;
+}
+
+/* Variante panorámica */
+.horizontal-scroll-gallery.panoramic .gallery-item img {
+    aspect-ratio: 16/9;
+}
+
+/* Efectos adicionales */
+.horizontal-scroll-gallery.fade-edges::before,
+.horizontal-scroll-gallery.fade-edges::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 20px;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.horizontal-scroll-gallery.fade-edges::before {
+    left: 0;
+    background: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+.horizontal-scroll-gallery.fade-edges::after {
+    right: 0;
+    background: linear-gradient(to left, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0));
+}
+
+/* Indicador de scroll */
+.horizontal-scroll-gallery.scroll-indicator {
+    position: relative;
+}
+
+.horizontal-scroll-gallery.scroll-indicator::after {
+    content: '← Desliza para ver más →';
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #666;
+    opacity: 0.7;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+    .horizontal-scroll-gallery.scroll-indicator::after {
+        content: '← Desliza →';
+        font-size: 10px;
+    }
+}
+
+/* Animación de carga */
+.gallery-item img {
+    opacity: 0;
+    animation: fadeIn 0.5s ease-in-out forwards;
+}
+
+.gallery-item:nth-child(1) img { animation-delay: 0.1s; }
+.gallery-item:nth-child(2) img { animation-delay: 0.2s; }
+.gallery-item:nth-child(3) img { animation-delay: 0.3s; }
+.gallery-item:nth-child(4) img { animation-delay: 0.4s; }
+.gallery-item:nth-child(5) img { animation-delay: 0.5s; }
+.gallery-item:nth-child(6) img { animation-delay: 0.6s; }
+.gallery-item:nth-child(7) img { animation-delay: 0.7s; }
+.gallery-item:nth-child(8) img { animation-delay: 0.8s; }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

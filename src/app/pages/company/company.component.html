@@ -1,0 +1,153 @@
+<app-header *ngIf="page"></app-header>
+<app-layout *ngIf="page">
+  <div class="wrapper x-hidden">
+    <app-line-reveal>
+      <div class="line horizontal"></div>
+    </app-line-reveal>
+  </div>
+  <div
+    class="wrapper wrapper--x-gap-45 wrapper--bottom-30 wrapper--m-top-0 wrapper--m-bottom-75 d-flex flex-column justify-content-between gap-100">
+    <div class="container container--medium">
+      <app-paragraph-reveal classSelector="title">
+        <h1 class="title text-uppercase" [innerHTML]="page?.companyFields?.title">
+        </h1>
+      </app-paragraph-reveal>
+    </div>
+    <div class="container container--small">
+      <p class="text">{{page?.companyFields?.description}}</p>
+    </div>
+  </div>
+  <div class="wrapper wrapper--x-x-0">
+    <app-line-reveal>
+      <div class="line horizontal"></div>
+    </app-line-reveal>
+  </div>
+  <div class="wrapper wrapper--top-0 wrapper--bottom-60 wrapper--m-bottom-195 grid-m-34">
+    <div class="col-left">
+      <app-paragraph-reveal classSelector="title">
+        <h1 class="title text-uppercase">{{page?.companyFields?.story}}</h1>
+      </app-paragraph-reveal>
+    </div>
+    <div class="col-right">
+      <div class="container">
+        <p class="text" [innerHTML]="page?.companyFields?.storyDescription"></p>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper wrapper--x-x-0">
+    <app-line-reveal>
+      <div class="line horizontal"></div>
+    </app-line-reveal>
+  </div>
+  <div class="wrapper wrapper--top-0 wrapper--m-bottom-195 grid-m-34 s-hidden">
+    accordeon
+  </div>
+  <div class="wrapper wrapper--top-0 wrapper--m-bottom-195 grid-m-34 x-hidden">
+    <div class="col-left d-flex flex-column gap-50 gap-m-120">
+      <app-paragraph-reveal classSelector="title">
+        <h4 class="title text-uppercase">{{page?.companyFields?.values}}</h4>
+      </app-paragraph-reveal>
+      <div class="container container--xsmall">
+        <ng-container *ngFor="let item of page.companyFields.valuesItems">
+          <h4 class="text-m text-grey">{{ item.subTitle }}</h4>
+          <p class="text-m">{{ item.subDescription }}</p>
+        </ng-container>
+      </div>      
+    </div>
+    <div class="col-right justify-content-between gap-20">
+      <div class="d-flex flex-column gap-50 gap-m-120 container container--xsmall">
+        <app-paragraph-reveal classSelector="title">
+          <h4 class="title text-uppercase">{{page?.companyFields?.mission}}</h4>
+        </app-paragraph-reveal>
+        <div class="container">
+          <p class="text-m" [innerHTML]="page?.companyFields?.missionDescription"></p>
+        </div>
+      </div>
+      <div class="d-flex flex-column gap-50 gap-m-120 container container--xsmall">
+        <app-paragraph-reveal classSelector="title">
+          <h4 class="title text-uppercase">{{page?.companyFields?.vision}}</h4>
+        </app-paragraph-reveal>
+        <div class="container">
+          <p class="text-m" [innerHTML]="page?.companyFields?.visionDescription"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper wrapper--x-x-0">
+    <app-line-reveal>
+      <div class="line horizontal"></div>
+    </app-line-reveal>
+  </div>
+  <div class="wrapper wrapper--top-0 wrapper--bottom-30 wrapper--m-bottom-75 grid-m-34">
+    <div class="col-left">
+      <app-paragraph-reveal classSelector="title">
+        <h1 class="title text-uppercase">{{page?.companyFields?.leadership}}</h1>
+      </app-paragraph-reveal>
+    </div>
+    <div class="col-right">
+      <div class="container">
+        <p class="text" [innerHTML]="page?.companyFields?.leadershipDescription"></p>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngFor="let item of page.companyFields.team.edges">
+    <div class="wrapper">
+      <app-line-reveal>
+        <div class="line horizontal"></div>
+      </app-line-reveal>
+    </div>
+    <div class="accordion wrapper wrapper--top-0 wrapper--bottom-0 grid-m-34">
+      <div class="col-left">
+        <app-paragraph-reveal classSelector="title">
+          <h3 class="title-s text-uppercase fw-light">{{ item.node.teamSingleFields.name }}</h3>
+        </app-paragraph-reveal>
+      </div>
+      <div class="col-right">
+        <div class="accordion-title" (click)="toggleAccordion($event)">
+          <h4 class="title-s text-grey fw-light">{{ item.node.teamSingleFields.title }}</h4>
+          <div class="button button--plus"></div>
+        </div>
+      </div>
+      <div class="col-left accordion-content-left">
+      </div>
+      <div class="col-right accordion-content-left">
+        <div class="accordion-content">
+          <p class="text" [innerHTML]="item.node.teamSingleFields.description"></p>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <div class="wrapper wrapper--m-bottom-195">
+    <app-line-reveal>
+      <div class="line horizontal"></div>
+    </app-line-reveal>
+  </div>
+  <div class="wrapper wrapper--top-45 wrapper-m--top-25 wrapper--x-x-0">
+    <app-line-reveal>
+      <div class="line horizontal"></div>
+    </app-line-reveal>
+  </div>
+  <div class="wrapper wrapper--top-0 wrapper--m-bottom-75 grid-m-34">
+    <div class="col-left">
+      <app-paragraph-reveal classSelector="title">
+        <h1 class="title text-uppercase">{{page?.companyFields?.clients}}</h1>
+      </app-paragraph-reveal>
+    </div>
+    <div class="col-right">
+      <div class="container">
+        <p class="text" [innerHTML]="page?.companyFields?.clientsDescription"></p>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper wrapper-m--top-0 wrapper--m-bottom-195">
+    <div class="logos">
+      <ng-container *ngFor="let item of page.companyFields.clientsLogos.edges">
+        <div class="logo-img">
+          <img [srcset]="item.node.featuredImage.node.srcSet" [src]="item.node.featuredImage.node.sourceUrl" [alt]="item.node.featuredImage.node.altText"/>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</app-layout>
+<app-footer *ngIf="page"></app-footer>

@@ -1,0 +1,67 @@
+$mq-tablet: 768px;
+$mq-desktop: 1200px;
+$mq-wide: 1600px;
+
+$black: #000;
+$carbon: #1c1c1c;
+$grey: #b9bab7;
+$darkgrey: #454545;
+$white: #fff;
+
+
+:root {
+    --title-big-font-size: 36px;
+    --gutter: 1.5rem;
+    --title-font-size: 32px;
+    --title-s-font-size: 24px;
+    --body-font-size: 15px;
+    --body-m-font-size: 14px;
+    --body-s-font-size: 12px;
+    --body-xs-font-size: 10px;
+    --gutter: 1rem;
+    --body-font-family: 'NeueHaasGrotDisp', sans-serif;
+    --body-font-weight: 400;
+    --body-line-height: 1.4em;
+    --body-letter-spacing: .03em;
+    --title-line-height: .97em;
+    --title-letter-spacing: .03em;
+    --title-s-line-height: 1.1em;
+    --title-s-letter-spacing: .035em;    
+    --body-color: #000;
+    --body-bg: #eeefed;;
+    --border: #b9bab7;
+    --padding-main: 80px;
+    --top-75: 75px;
+    --bottom-75: 75px;
+    --bottom-195: 175px;
+  }
+
+  @media (min-width: $mq-tablet) {
+    :root {
+      --title-big-font-size: 7.5vw;
+      --title-font-size: 48px;
+      --title-s-font-size: 36px;
+      --body-font-size: 18px;
+      --body-m-font-size: 16px;
+      --gutter: 1.75rem;
+      --padding-main: 175px;
+    }
+  }
+
+  @media (min-width: $mq-desktop) {
+    :root {
+      /*--title-big-font-size: 8.5vw;*/
+      --title-font-size: 64px;
+      --title-s-font-size: 48px;
+      --body-font-size: 1.55vw;
+      --gutter: 1.75rem;
+      --padding-main: 175px;
+    }
+  }
+
+  @media (min-width: $mq-wide) {
+    :root {
+      --title-big-font-size: 120px;
+      --body-font-size: 25px;
+    }
+  }

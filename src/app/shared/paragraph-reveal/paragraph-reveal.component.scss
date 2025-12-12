@@ -1,0 +1,20 @@
+.lineParent {
+  overflow: hidden;
+  display: block;
+  position: relative;
+  height: auto;
+}
+
+.lineChild {
+  display: block;
+  position: relative;
+  height: auto;
+}
+
+.mask {
+  overflow: hidden;
+}
+
+.target {
+  font-kerning: none;
+}

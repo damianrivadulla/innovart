@@ -1,0 +1,35 @@
+<div #carousel class="main-carousel" [ngClass]="classCss">
+  <div class="carousel-cell" *ngFor="let item of gallery">
+    <app-curtain-reveal>
+      <img [srcset]="item?.node?.srcSet"
+           [alt]="item?.node?.title">
+    </app-curtain-reveal>
+  </div>
+</div>
+<ng-container *ngIf="showButtons">
+  <div class="arrows" [class.outside]="showButtonsOutside" [class.inside]="!showButtonsOutside">
+    <a class="arrow arrow-left" (click)="goToPrev()">
+      <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53.45 31.94">
+        <g id="Content">
+          <rect x=".25" y=".25" width="52.95" height="31.44" rx="15.72" ry="15.72"
+                style="fill:none; stroke:#b9bab7; stroke-miterlimit:10; stroke-width:.5px;"/>
+          <path
+            d="M40.24,16.4H14.68c.65.85,1.31,1.7,2.06,2.7l2.06,2.7h-1.2l-4.4-5.83,4.4-5.83h1.2l-2.06,2.7c-.74.98-1.41,1.85-2.05,2.69h25.54v.87Z"
+            style="fill:#b9bab7;"/>
+        </g>
+      </svg>
+    </a>
+    <a class="arrow arrow-right" (click)="goToNext()">
+      <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53.45 31.94">
+        <g id="Content">
+          <rect x=".25" y=".25" width="52.95" height="31.44" rx="15.72" ry="15.72"
+                transform="translate(53.45 31.94) rotate(180)"
+                style="fill:none; stroke:#b9bab7; stroke-miterlimit:10; stroke-width:.5px;"/>
+          <path
+            d="M13.21,15.55h25.56c-.65-.85-1.31-1.7-2.06-2.7l-2.06-2.7h1.2l4.4,5.83-4.4,5.83h-1.2l2.06-2.7c.74-.98,1.41-1.85,2.05-2.69H13.21v-.87Z"
+            style="fill:#b9bab7;"/>
+        </g>
+      </svg>
+    </a>
+  </div>
+</ng-container>

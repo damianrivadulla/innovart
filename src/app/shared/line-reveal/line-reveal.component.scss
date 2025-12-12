@@ -1,0 +1,16 @@
+@import "../../../variables.scss";
+
+.reveal-content {
+  position: relative;
+  overflow: hidden;
+}
+
+.reveal-content {
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 2s ease-in-out;
+
+  &.revealed {
+    transform: scaleX(1);
+  }
+}

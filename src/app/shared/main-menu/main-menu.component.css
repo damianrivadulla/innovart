@@ -1,0 +1,37 @@
+:host {
+  display: block;
+  overflow: hidden;
+}
+
+.mask {
+  transform-origin: top;
+  animation: curtainUnfold 0.6s ease-out forwards;
+}
+
+@keyframes curtainUnfold {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+h2 {
+  margin-bottom: 2rem;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  margin: 1rem 0;
+}
+
+ul li a {
+  text-decoration: none;
+  font-size: 2rem;
+}/*# sourceMappingURL=main-menu.component.css.map */

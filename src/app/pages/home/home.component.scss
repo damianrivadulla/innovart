@@ -1,0 +1,132 @@
+@import "../../../variables";
+
+.stickied {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.work {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column-reverse;
+  gap: 15px;
+  &--free{
+    height: auto!important;
+    padding: 0!important;
+    max-height: unset!important;
+    .gallery{
+      height: auto!important;
+      max-height: unset!important;
+    }
+  }
+
+  @media (max-width: $mq-tablet - 1px) {
+    padding: 0 30px;
+  }
+
+  @media (min-width: $mq-tablet) {
+    gap: 0;
+    flex-direction: row;
+    height: 39.4vw;
+  }
+
+  @media (min-width: $mq-wide) {
+    height: 630px;
+  }
+
+  .info {
+    @media (min-width: $mq-tablet) {
+      flex: 0 1 30%;
+      max-width: 410px;
+    }
+
+    @media (min-width: $mq-wide) {
+      flex: 0 1 410px;
+    }
+
+    /* fixed width */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 25px;
+    @media (min-width: $mq-tablet) {
+      padding-right: 60px;
+    }
+
+    .info-title {
+      flex: 1 1 auto;
+    }
+
+    .info-description {
+      display: none;
+      flex: 0 1 auto;
+      @media (min-width: $mq-tablet) {
+        display: grid;
+      }
+
+      gap: 50px;
+      > p{
+        margin: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        @media (min-width: $mq-desktop) {
+          -webkit-line-clamp: 10;
+        }
+      }
+
+      .info-box {
+        display: flex;
+        justify-content: space-between;
+
+        &-client {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+        }
+
+        &-images {
+          display: flex;
+          flex-direction: column;
+          gap: 0;
+        }
+      }
+    }
+  }
+
+  .gallery {
+    /*height: 50vw;*/
+    min-height: 200px;
+    /*max-height: 400px;*/
+
+    @media (min-width: $mq-tablet) {
+      flex-direction: row;
+      height: 100%;
+      max-height: unset;
+    }
+
+    flex: 1 1 auto;
+    /* dynamic width */
+  }
+}
+
+.height-unset {
+  .work {
+    height: unset !important;
+
+    @media (max-width: ($mq-tablet - 1px)) {
+      flex-direction: unset !important;
+    }
+
+    .info,
+    .gallery {
+      height: unset !important;
+      min-height: unset !important;
+    }
+  }
+}

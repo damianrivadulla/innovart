@@ -1,0 +1,10 @@
+
+<svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53.45 31.94">
+  <g id="Content">
+    <rect x=".25" y=".25" width="52.95" height="31.44" rx="15.72" ry="15.72"
+          style="fill:none; stroke:#6f7467; stroke-miterlimit:10; stroke-width:.5px;"/>
+    <path
+      d="M40.24,16.4H14.68c.65.85,1.31,1.7,2.06,2.7l2.06,2.7h-1.2l-4.4-5.83,4.4-5.83h1.2l-2.06,2.7c-.74.98-1.41,1.85-2.05,2.69h25.54v.87Z"
+      style="fill:#6f7467;"/>
+  </g>
+</svg>

@@ -1,0 +1,87 @@
+<app-header *ngIf="portfolioInfo"></app-header>
+<app-layout *ngIf="portfolioInfo">
+  <ng-container>
+    <div class="wrapper x-hidden">
+      <app-line-reveal>
+        <div class="line horizontal"></div>
+      </app-line-reveal>
+    </div>
+    <div
+      class="wrapper wrapper--x-gap-45 wrapper--bottom-30 wrapper--m-top-0 wrapper--m-bottom-25 min-h-400 d-flex flex-column justify-content-between gap-60">
+      <app-paragraph-reveal classSelector="title">
+        <h1 class="title text-uppercase">{{ portfolioInfo?.portfolioFields?.title }}</h1>
+      </app-paragraph-reveal>
+      <div class="container container--small">
+        <p class="text">{{ portfolioInfo?.portfolioFields?.description }}</p>
+      </div>
+    </div>
+  </ng-container>
+  <!--<ng-container *ngIf="portfolio">
+    <div *ngFor="let item of portfolio">
+      <h1>{{item.node.title}}</h1>
+      <p>{{item}}</p>
+    </div>
+  </ng-container>
+  <button (click)="loadMore()" [disabled]="!hasMore">cargar mas {{noPosts}} {{hasMore}}</button>-->
+  <div class="wrapper wrapper--top-0 wrapper--x-0 wrapper--bottom-75 work-container">
+    <ng-container *ngIf="portfolio">
+      <div class="wrapper wrapper--x-x-0 wrapper--m-right-0 wrapper--bottom-0" *ngFor="let item of portfolio">
+        <app-line-reveal>
+          <div class="line line--m-mr horizontal"></div>
+        </app-line-reveal>
+        <div class="work">
+          <div class="gallery">
+            <app-gallery-horizontal #gallery
+                                    classCss="big"
+                                    [gallery]="item?.node?.portfolioSingleFields?.galleryGrid?.edges"
+                                    [showButtons]="false"
+                                    (slideClicked)="redirectToPortfolio(item)"></app-gallery-horizontal>
+          </div>
+          <div class="info info--desktop">
+            <div class="info-title">
+              <h3 class="text"><a class="link link--black" href="{{ item?.node?.uri }}">{{ item?.node?.portfolioSingleFields.title }}</a></h3>
+              <h4 class="text text-grey">{{ item?.node?.portfolioSingleFields.clientLocation }}</h4>
+            </div>
+            <div class="info-description">
+              <div class="info-box">
+                <div class="info-box-client"><span class="text-xs text-grey text-uppercase">Client</span>
+                  <h4 class="text-s">{{ item?.node?.portfolioSingleFields.clientName }}</h4>
+                </div>
+                <div class="info-box-images">
+                  <span class="text-xs text-grey text-uppercase">Images</span>
+                  <label *ngIf="gallery" class="text-s caption">{{ gallery.currentIndex }} of {{
+                      gallery.totalSlides
+                    }}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="info info--mobile">
+            <div class="info-description">
+              <div class="info-box">
+                <div class="info-box-client"><span class="text-xs text-grey text-uppercase">Client</span>
+                  <h4 class="text-s">{{ item?.node?.portfolioSingleFields.clientName }}</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+  <div class="wrapper wrapper--top-0 wrapper--m-top-75 wrapper--bottom-45 wrapper--m-bottom-195"
+       [class.hidden]="!hasMore">
+    <app-line-reveal class="x-hidden">
+      <div class="line horizontal"></div>
+    </app-line-reveal>
+    <div class="d-flex gap-30">
+      <h2 class="title title-s w-min text-uppercase">
+        <a class="link link--black" (click)="loadMore()" [innerHTML]="portfolioInfo?.portfolioFields?.loadMore"></a>
+      </h2>
+      <div *ngIf="(portfolio$ | async)?.loading" class="spinner-container">
+        <mat-spinner></mat-spinner>
+      </div>
+    </div>
+  </div>
+</app-layout>
+<app-footer *ngIf="portfolioInfo"></app-footer>

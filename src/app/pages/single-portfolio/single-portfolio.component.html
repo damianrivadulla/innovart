@@ -1,0 +1,98 @@
+<div *ngIf="portfolio" 
+  [style.--text-color]="portfolio?.portfolioSingleFields?.textColor"
+  [style.--background-color]="portfolio?.portfolioSingleFields?.backgroundColor"
+  [style.--body-bg]="portfolio?.portfolioSingleFields?.backgroundColor"
+  [style.--button-text-color]="portfolio?.portfolioSingleFields?.buttonTextColor">
+<app-header></app-header>
+<app-layout>
+  <div class="wrapper x-hidden">
+    <app-line-reveal>
+      <div class="line horizontal"></div>
+    </app-line-reveal>
+  </div>
+  <div
+    class="wrapper wrapper--bottom-60 wrapper--m-bottom-25 wrapper--m-top-0 min-h-400 d-flex flex-column justify-content-between gap-75">
+    <div class="d-flex justify-content-between gap-30">
+      <div class="container container--medium">
+        <app-paragraph-reveal classSelector="title">
+          <h1 class="title text-uppercase" [innerHTML]="portfolio.portfolioSingleFields?.title">
+          </h1>
+        </app-paragraph-reveal>
+      </div>
+      <app-paragraph-reveal classSelector="title" class="x-hidden">
+        <h2 class="title w-min text-uppercase text-end">
+          <a class="link link--black">Next<br>Project</a>
+        </h2>
+      </app-paragraph-reveal>
+    </div>
+    <div class="container container--small">
+      <p class="text" [innerHTML]="portfolio.portfolioSingleFields?.description"></p>
+    </div>
+  </div>
+  <div class="wrapper wrapper--bottom-60 wrapper--m-top-50 wrapper--m-bottom-195 gap-75">
+    <div class="gallery">
+      <app-gallery-horizontal #gallery
+        [gallery]="portfolio?.portfolioSingleFields?.mainGallery?.edges" [showButtons]="true"></app-gallery-horizontal>
+    </div>
+    <div class="container container--small container--push-right">
+      <p class="text">{{ portfolio.portfolioSingleFields?.galleryDescription }}</p>
+    </div>
+  </div>
+  <div class="wrapper wrapper--bottom-60 wrapper--m-top-50 wrapper--m-bottom-195">
+    <div class="images images--left">
+      <div class="image-item">
+          <img class="img img--full" [srcset]="portfolio?.portfolioSingleFields?.image1?.node?.srcSet" [alt]="portfolio?.portfolioSingleFields?.image2?.node?.title">
+      </div>
+    </div>
+  </div>
+  <div class="wrapper wrapper--bottom-60 wrapper--m-top-50 wrapper--m-bottom-195">
+    <div class="images images--right images--inline">
+      <div class="image-item">
+        <img class="img img--full" [srcset]="portfolio?.portfolioSingleFields?.image2?.node?.srcSet" [alt]="portfolio?.portfolioSingleFields?.image2?.node?.title">
+      </div>
+      <div class="image-item">
+        <img class="img img--full" [srcset]="portfolio?.portfolioSingleFields?.image3?.node?.srcSet" [alt]="portfolio?.portfolioSingleFields?.image3?.node?.title">
+      </div>
+    </div>
+  </div>
+  <div class="wrapper wrapper--bottom-60 wrapper--m-top-50 wrapper--m-bottom-195">
+    <div class="testimonial">
+      <p class="testimonial-quote">"{{portfolio?.portfolioSingleFields?.quote}}”</p>
+      <div class="testimonial-info">
+        <span class="testimonial-name">{{portfolio?.portfolioSingleFields?.quoteName}}</span>
+        <span class="testimonial-title">{{portfolio?.portfolioSingleFields?.quoteTitle}}</span>
+        <span class="testimonial-company">{{portfolio?.portfolioSingleFields?.quoteCompany}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper wrapper--bottom-60 wrapper--m-top-50 wrapper--m-bottom-195">
+    <div class="images images--left images--column">
+      <div class="image-item">
+        <img class="img img--full" [srcset]="portfolio?.portfolioSingleFields?.image4?.node?.srcSet" [alt]="portfolio?.portfolioSingleFields?.image4?.node?.title">
+      </div>
+      <div class="image-item">
+        <img class="img img--full" [srcset]="portfolio?.portfolioSingleFields?.image5?.node?.srcSet" [alt]="portfolio?.portfolioSingleFields?.image5?.node?.title">
+      </div>
+    </div>
+  </div>
+  <div class="wrapper wrapper--bottom-60 wrapper--m-top-50 wrapper--m-bottom-195">
+    <div class="container container--small">
+      <p class="text" [innerHTML]="portfolio.portfolioSingleFields?.description2"></p>
+    </div>
+  </div>
+  <div class="wrapper wrapper--bottom-60 wrapper--m-top-50 wrapper--m-bottom-195">
+    <div class="gallery">
+      <app-gallery-horizontal #gallery
+        [gallery]="portfolio?.portfolioSingleFields?.bottomGallery?.edges" [showButtons]="true" [showButtonsOutside]="true"></app-gallery-horizontal>      
+    </div>
+  </div>
+  <div class="wrapper wrapper--bottom-30 wrapper--m-top-75 wrapper--m-bottom-50">
+    <div class="container d-flex justify-content-tablet-end">
+      <h2 class="title title-s w-min text-uppercase text-tablet-end">
+        <a class="link link--black">Next<br>Project</a>
+      </h2>
+    </div>
+  </div>
+</app-layout>
+<app-footer></app-footer>
+</div>

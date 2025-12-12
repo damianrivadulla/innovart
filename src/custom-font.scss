@@ -1,0 +1,88 @@
+@use '@angular/material' as mat;
+
+@font-face {
+  font-family: 'NeueHaasGrotDisp';
+  src: url('../public/assets/fonts/NeueHaasGrotDisp-55Roman.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NeueHaasGrotDisp';
+  src: url('../public/assets/fonts/NeueHaasGrotDisp-45Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+$custom-typography: (
+  font-family: 'CustomFont, sans-serif',
+  headline-1: (
+    font-size: 96px,
+    line-height: 1.167,
+    font-weight: 300
+  ),
+  headline-2: (
+    font-size: 60px,
+    line-height: 1.2,
+    font-weight: 400
+  ),
+  headline-3: (
+    font-size: 48px,
+    line-height: 1.167,
+    font-weight: 400
+  ),
+  headline-4: (
+    font-size: 34px,
+    line-height: 1.235,
+    font-weight: 400
+  ),
+  headline-5: (
+    font-size: 24px,
+    line-height: 1.334,
+    font-weight: 400
+  ),
+  headline-6: (
+    font-size: 20px,
+    line-height: 1.6,
+    font-weight: 500
+  ),
+  subtitle-1: (
+    font-size: 16px,
+    line-height: 1.75,
+    font-weight: 400
+  ),
+  subtitle-2: (
+    font-size: 14px,
+    line-height: 1.57,
+    font-weight: 500
+  ),
+  body-1: (
+    font-size: 14px,
+    line-height: 1.5,
+    font-weight: 400
+  ),
+  body-2: (
+    font-size: 16px,
+    line-height: 1.43,
+    font-weight: 400
+  ),
+  button: (
+    font-size: 14px,
+    line-height: 1.25,
+    font-weight: 500
+  ),
+  caption: (
+    font-size: 12px,
+    line-height: 1.25,
+    font-weight: 400
+  ),
+  overline: (
+    font-size: 10px,
+    line-height: 1.5,
+    font-weight: 400
+  )
+);
+
+@include mat.typography-hierarchy($custom-typography);
