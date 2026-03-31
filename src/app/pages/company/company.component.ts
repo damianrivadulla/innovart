@@ -13,6 +13,7 @@ import { CurtainRevealComponent } from '../../shared/curtain-reveal/curtain-reve
 import ScrollReveal from 'scrollreveal';
 import { QUERY_COMPANY } from '../../queries/company';
 import { BaseComponentService } from '../../shared/services/base-component.service';
+import { SeoService } from '../../shared/services/seo.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -37,6 +38,7 @@ export class CompanyComponent extends BaseComponentService implements OnInit {
   page: any;
 
   constructor(private readonly apollo: Apollo,
+              private seoService: SeoService,
               router: Router,
               elementRef: ElementRef,
               renderer: Renderer2) {
@@ -57,6 +59,7 @@ export class CompanyComponent extends BaseComponentService implements OnInit {
     }).valueChanges.subscribe((result: any) => {
       console.log("@==>", result.data.page);
       this.page = result.data.page;
+      this.seoService.applySeo(this.page?.seo, this.page?.title);
     });
   }
 

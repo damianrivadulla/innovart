@@ -12,6 +12,7 @@ import { ParagraphRevealComponent } from '../../shared/paragraph-reveal/paragrap
 import { CurtainRevealComponent } from '../../shared/curtain-reveal/curtain-reveal.component';
 import { MUTATION_SEND_EMAIL, QUERY_CONTACT } from '../../queries/contact';
 import { BaseComponentService } from '../../shared/services/base-component.service';
+import { SeoService } from '../../shared/services/seo.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import ScrollReveal from 'scrollreveal';
 import { Router } from '@angular/router';
@@ -40,21 +41,25 @@ import { Router } from '@angular/router';
 export class ContactComponent extends BaseComponentService implements OnInit {
   contactForm: FormGroup = new FormGroup<any>({
     type: new FormControl(null, Validators.required),
-    name: new FormControl(null, Validators.required),
-    company: new FormControl(null, Validators.required),
-    position: new FormControl(null, Validators.required),
-    email: new FormControl(null, [Validators.email, Validators.required]),
-    phone: new FormControl(null, Validators.required),
-    hear: new FormControl(null, Validators.required),
-    message: new FormControl(null, Validators.required),
+    name: new FormControl(null),
+    company: new FormControl(null),
+    position: new FormControl(null),
+    email: new FormControl(null, [Validators.email]),
+    phone: new FormControl(null),
+    hear: new FormControl(null),
+    message: new FormControl(null),
+    skills: new FormControl(null),
+    collaborationDetails: new FormControl(null),
   });
   contact: any;
   error: boolean | null = null;
   success: boolean | null = null;
   submitted: boolean | null = null;
   formValid : boolean;
+  selectedFormId: string = '';
 
   constructor(private readonly apollo: Apollo,
+              private seoService: SeoService,
               router: Router,
               elementRef: ElementRef,
               renderer: Renderer2) {
@@ -93,6 +98,101 @@ export class ContactComponent extends BaseComponentService implements OnInit {
     return this.contactForm.get('message');
   }
 
+  get formSkills() {
+    return this.contactForm.get('skills');
+  }
+
+  get formCollaborationDetails() {
+    return this.contactForm.get('collaborationDetails');
+  }
+
+  get selectedType() {
+    return this.contactForm.get('type')?.value;
+  }
+
+  getSelectedFormId(): string {
+    if (!this.contact?.contactFields?.contactFormSubjectOptions) {
+      return '';
+    }
+    const selectedOption = this.contact.contactFields.contactFormSubjectOptions.find(
+      (item: any) => item.option === this.selectedType
+    );
+    return selectedOption?.formId || '';
+  }
+
+  isFieldRequired(fieldName: string): boolean {
+    const formId = this.getSelectedFormId();
+    
+    switch (formId) {
+      case 'job':
+        return ['name', 'company', 'position', 'email', 'phone', 'hear', 'message'].includes(fieldName);
+      case 'careers':
+        return ['name', 'email', 'phone', 'skills'].includes(fieldName);
+      case 'partnership':
+        return ['company', 'name', 'position', 'email', 'phone', 'hear', 'collaborationDetails'].includes(fieldName);
+      default:
+        return false;
+    }
+  }
+
+  shouldShowField(fieldName: string): boolean {
+    const formId = this.getSelectedFormId();
+    
+    switch (formId) {
+      case 'job':
+        return ['name', 'company', 'position', 'email', 'phone', 'hear', 'message'].includes(fieldName);
+      case 'careers':
+        return ['name', 'email', 'phone', 'skills'].includes(fieldName);
+      case 'partnership':
+        return ['company', 'name', 'position', 'email', 'phone', 'hear', 'collaborationDetails'].includes(fieldName);
+      default:
+        return false;
+    }
+  }
+
+  updateFormValidators(): void {
+    const formId = this.getSelectedFormId();
+    
+    // Reset all validators first
+    Object.keys(this.contactForm.controls).forEach(key => {
+      if (key !== 'type') {
+        this.contactForm.get(key)?.clearValidators();
+        this.contactForm.get(key)?.updateValueAndValidity();
+      }
+    });
+
+    // Set validators based on form type
+    if (formId === 'job') {
+      this.contactForm.get('name')?.setValidators([Validators.required]);
+      this.contactForm.get('company')?.setValidators([Validators.required]);
+      this.contactForm.get('position')?.setValidators([Validators.required]);
+      this.contactForm.get('email')?.setValidators([Validators.required, Validators.email]);
+      this.contactForm.get('phone')?.setValidators([Validators.required]);
+      this.contactForm.get('hear')?.setValidators([Validators.required]);
+      this.contactForm.get('message')?.setValidators([Validators.required]);
+    } else if (formId === 'careers') {
+      this.contactForm.get('name')?.setValidators([Validators.required]);
+      this.contactForm.get('email')?.setValidators([Validators.required, Validators.email]);
+      this.contactForm.get('phone')?.setValidators([Validators.required]);
+      this.contactForm.get('message')?.setValidators([Validators.required]);
+    } else if (formId === 'partnership') {
+      this.contactForm.get('company')?.setValidators([Validators.required]);
+      this.contactForm.get('name')?.setValidators([Validators.required]);
+      this.contactForm.get('position')?.setValidators([Validators.required]);
+      this.contactForm.get('email')?.setValidators([Validators.required, Validators.email]);
+      this.contactForm.get('phone')?.setValidators([Validators.required]);
+      this.contactForm.get('hear')?.setValidators([Validators.required]);
+      this.contactForm.get('collaborationDetails')?.setValidators([Validators.required]);
+    }
+
+    // Update validity for all fields
+    Object.keys(this.contactForm.controls).forEach(key => {
+      if (key !== 'type') {
+        this.contactForm.get(key)?.updateValueAndValidity();
+      }
+    });
+  }
+
   ngAfterViewInit(): void {
     ScrollReveal().reveal('body', {
       interval: 200,
@@ -108,7 +208,25 @@ export class ContactComponent extends BaseComponentService implements OnInit {
     }).valueChanges.subscribe((result: any) => {
       console.log("@==>", result.data.page);
       this.contact = result.data.page;
-      this.contactForm.get('hear')?.setValue("");
+      this.seoService.applySeo(this.contact?.seo, this.contact?.title);
+      // Seleccionar el primer radio button por defecto
+      if (this.contact?.contactFields?.contactFormSubjectOptions && 
+          this.contact.contactFields.contactFormSubjectOptions.length > 0) {
+        const firstOption = this.contact.contactFields.contactFormSubjectOptions[0].option;
+        this.contactForm.get('type')?.setValue(firstOption);
+        this.updateFormValidators();
+      }
+
+      // Listen to type changes
+      this.contactForm.get('type')?.valueChanges.subscribe(() => {
+        // Clear all fields when type changes
+        Object.keys(this.contactForm.controls).forEach(key => {
+          if (key !== 'type') {
+            this.contactForm.get(key)?.setValue(null);
+          }
+        });
+        this.updateFormValidators();
+      });
     });
   }
 
@@ -118,20 +236,25 @@ export class ContactComponent extends BaseComponentService implements OnInit {
       this.contactForm.markAllAsTouched();
     } else {
       const form = this.contactForm.getRawValue();
+      const formId = this.getSelectedFormId();
       console.log("@==>", form);
+      
+      // Build message based on form type
+      let message = `type: ${form.type}\n`;
+      
+      if (formId === 'job') {
+        message += `name: ${form.name}\ncompany: ${form.company}\nposition: ${form.position}\nphone: ${form.phone}\nhear: ${form.hear}\nmessage: ${form.message}`;
+      } else if (formId === 'careers') {
+        message += `name: ${form.name}\nphone: ${form.phone}\nskills: ${form.message}`;
+      } else if (formId === 'partnership') {
+        message += `company: ${form.company}\nname: ${form.name}\nposition: ${form.position}\nphone: ${form.phone}\nhear: ${form.hear}\ncollaborationDetails: ${form.collaborationDetails}`;
+      }
+      
       this.apollo.mutate({
         mutation: gql`${MUTATION_SEND_EMAIL}`,
         variables: {
           email: form.email,
-          message: `
-          type: ${form.type},
-          name: ${form.name},
-          company: ${form.company},
-          position: ${form.position},
-          phone: ${form.phone},
-          hear: ${form.hear},
-          message: ${form.message},
-        `,
+          message: message,
           subject: "Contact page form submitted"
         }
       }).subscribe((response: any) => {

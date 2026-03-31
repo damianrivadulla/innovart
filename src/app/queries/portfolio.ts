@@ -1,3 +1,6 @@
+/** Límite de categorías por proyecto (single portfolio). Por defecto WPGraphQL devuelve 10; aquí se permite el total que consideremos. */
+export const PORTFOLIO_CATEGORIES_FIRST = 100;
+
 export const QUERY_PORTFOLIO_SINGLE = (id: string) => `
   query PortfolioSingleQuery($id: ID = "${id}") {
     portfolioCompany(idType: URI, id: $id) {
@@ -27,6 +30,13 @@ export const QUERY_PORTFOLIO_SINGLE = (id: string) => `
       databaseId
       slug
       title
+      categories(first: ${PORTFOLIO_CATEGORIES_FIRST}, where: { orderby: TERM_ORDER, order: ASC }) {
+        edges {
+          node {
+            name
+          }
+        }
+      }
       portfolioSingleFields {
         textColor
         backgroundColor
@@ -38,6 +48,7 @@ export const QUERY_PORTFOLIO_SINGLE = (id: string) => `
             node {
               title
               altText
+              caption
               sourceUrl
               srcSet
             }
@@ -52,6 +63,8 @@ export const QUERY_PORTFOLIO_SINGLE = (id: string) => `
             srcSet
           }
         }
+        video1
+        block1Position
         image2 {
           node {
             altText
@@ -68,6 +81,8 @@ export const QUERY_PORTFOLIO_SINGLE = (id: string) => `
             srcSet
           }
         }
+        video23
+        block23Position
         quote
         quoteName
         quoteTitle
@@ -80,6 +95,8 @@ export const QUERY_PORTFOLIO_SINGLE = (id: string) => `
             srcSet
           }
         }
+        video4
+        block45Position
         image5 {
           node {
             altText
@@ -88,12 +105,14 @@ export const QUERY_PORTFOLIO_SINGLE = (id: string) => `
             srcSet
           }
         }
+        video5
         description2
         bottomGallery {
           edges {
             node {
               title
               altText
+              caption
               sourceUrl
               srcSet
             }
@@ -105,6 +124,13 @@ export const QUERY_PORTFOLIO_SINGLE = (id: string) => `
           databaseId
           uri
           slug
+        }
+      }
+    }
+    portfolioCompanies(first: 1, where: {status: PUBLISH, orderby: {order: ASC, field: MENU_ORDER}}) {
+      edges {
+        node {
+          uri
         }
       }
     }
@@ -165,11 +191,19 @@ export const QUERY_PORTFOLIO = (noPosts: any, afterKey: any) => `
                   srcSet
                 }
               }
-            }
+            }          
             title
-            clientLocation
-            description
-            clientName
+            portfolioImage {
+              node {
+                altText
+                title
+                sourceUrl
+                srcSet
+              }
+            }
+            name
+            location
+            voiceTone
           }
         }
       }

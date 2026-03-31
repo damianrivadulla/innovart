@@ -10,6 +10,7 @@ import { QUERY_METHODY } from '../../queries/methodology';
 import { QUERY_TERMS } from '../../queries/terms';
 import { NgIf } from '@angular/common';
 import { BaseComponentService } from '../../shared/services/base-component.service';
+import { SeoService } from '../../shared/services/seo.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -30,6 +31,7 @@ export class TermsOfSaleComponent extends BaseComponentService implements OnInit
   page: any;
 
   constructor(private readonly apollo: Apollo,
+              private seoService: SeoService,
               router: Router,
               elementRef: ElementRef,
               renderer: Renderer2) {
@@ -42,6 +44,7 @@ export class TermsOfSaleComponent extends BaseComponentService implements OnInit
     }).valueChanges.subscribe((result: any) => {
       console.log("@==>", result.data.page);
       this.page = result.data.page;
+      this.seoService.applySeo(this.page?.seo, this.page?.title);
     });
   }
 

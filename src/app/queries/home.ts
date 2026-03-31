@@ -2,6 +2,7 @@ export const QUERY_HOME = `
   query HomeQuery {
     page(id: "12", idType: DATABASE_ID) {
       seo {
+        title
         metaDesc
         metaRobotsNofollow
         metaRobotsNoindex
@@ -37,7 +38,7 @@ export const QUERY_HOME = `
         }
         viewAllWorkLabel
         selectedWorkLabel
-        selectedWork {
+        selectedWork(first: 50) {
           edges {
             node {
               ... on PortfolioCompany {
@@ -45,20 +46,17 @@ export const QUERY_HOME = `
                 link
                 uri
                 portfolioSingleFields {
-                  galleryGrid {
-                    edges {
-                      node {
-                        title
-                        altText
-                        sourceUrl
-                        srcSet
-                      }
+                  portfolioImage{
+                    node {
+                      altText
+                      title
+                      sourceUrl
+                      srcSet
                     }
                   }
-                  title
-                  clientLocation
-                  description
-                  clientName
+                  name
+                  location
+                  voiceTone
                 }
               }
             }

@@ -17,6 +17,13 @@ export class GalleryTextHorizontalComponent implements AfterViewInit {
   galleryEffect!: Flickity;
 
   ngAfterViewInit(): void {
+    // Wait a bit for the DOM to be ready, then initialize
+    setTimeout(() => {
+      this.initializeFlickity();
+    }, 100);
+  }
+
+  private initializeFlickity(): void {
     const elem = this.carousel.nativeElement;
     this.galleryEffect = new Flickity(elem, {
       // options
@@ -33,8 +40,7 @@ export class GalleryTextHorizontalComponent implements AfterViewInit {
 
     setTimeout(() => {
       this.galleryEffect.resize();
-    }, 100)
-
+    }, 100);
   }
 
   goToNext(): void {

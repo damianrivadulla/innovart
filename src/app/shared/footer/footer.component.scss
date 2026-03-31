@@ -27,7 +27,7 @@
     }
   }
 
-  .footer-menu{
+  .footer-menu {
     align-items: flex-start;
   }
 
@@ -35,11 +35,7 @@
 
     .footer-col-1 {
       @media (min-width: $mq-tablet) {
-        flex: 1 0 33.3%;
-      }
-
-      @media (min-width: $mq-desktop) {
-        flex: 0 1 410px;
+        flex: 0 1 50%;
       }
 
       display: flex;
@@ -47,8 +43,16 @@
       justify-content: space-between;
       gap: 25px;
 
+      .footer-col-1-content {
+        max-width: 410px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
       .footer-logo {
-        max-width: 110px;
+        max-width: 330px;
+        opacity: 0.5;
 
         rect,
         path,
@@ -57,61 +61,65 @@
           fill: var(--text-color, $black) !important;
           transition: fill 0.3s ease;
         }
+
+        line {
+          stroke: var(--text-color, $black) !important;
+          transition: stroke 0.3s ease;
+        }
       }
     }
 
 
     .footer-col-2 {
+
       @media (min-width: $mq-tablet) {
-        flex: 1 1 33.3%;
-      }
-      .text-s{
-        min-width: 115px;
-      }
-
-      @media (min-width: $mq-desktop) {
-        flex: 1 1 auto;
-      }
-
-      @media (min-width: 1350px) {
-        padding-left: 140px;
+        flex: 1 1 50%;
       }
 
       flex-direction: row;
       display: flex;
-      gap: 20px;
-
-      @media (min-width: $mq-tablet) {
-        gap: 25px;
-      }
-
       flex-wrap: wrap;
-    }
-
-    .footer-col-3 {
-
-      .nav{
-        width: 100%;
-        max-width: 115px;
-      }
+      justify-content: space-between;
+      gap: 25px;
 
       @media (min-width: $mq-tablet) {
-        flex: 1 0 37%;
+        gap: 25px;
+        justify-content: flex-end;
       }
 
       @media (min-width: $mq-desktop) {
-        flex: 0 1 410px;
+        flex-wrap: nowrap;
       }
 
-      display: flex;
-      flex-direction: row;
-      gap: 20px;
-      justify-content: flex-start;
 
-      
+      .footer-col-2-content-left {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 30px;
+        width: 100%;
+
+        @media (min-width: $mq-tablet) {
+          max-width: 360px;
+        }
+      }
+
+      .footer-col-2-content-right {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        @media (min-width: $mq-tablet) {
+          justify-content: flex-end;
+        }
+
+
+      }
+
       @media (min-width: $mq-tablet) {
-        justify-content: flex-end;
-        gap: 25px;
+        .align-end {
+          align-items: flex-end;
+        }
       }
     }
 
@@ -120,6 +128,7 @@
       border-color: var(--text-color, $black);
       color: var(--background-color, var(--body-bg));
       transition: all .5s;
+      max-width: 300px;
 
       svg {
         path {
@@ -139,31 +148,41 @@
       }
     }
 
-    &.footer-copyright{
+    &.footer-copyright {
       align-items: flex-end;
+      justify-content: space-between;
+
+      .footer-col-2-content-left {
+        justify-content: flex-start !important;
+      }
     }
 
     @media (max-width: ($mq-tablet - 1px)) {
       &.footer-copyright {
-        gap: 130px 10px;
+        gap: 50px 20px;
         flex-wrap: wrap;
+        justify-content: center;
+
 
         .footer-col-1 {
           order: 2;
-          flex: 0 1 110px;
+          flex: 0 1 220px;
         }
 
         .footer-col-2 {
           padding-top: 3px;
           order: 3;
-          flex: 1 1 135px;
-          align-items: flex-end;
-          justify-content: flex-end;
-        }
+          justify-content: center!important;
 
-        .footer-col-3 {
-          order: 1;
-          flex: 1 1 100%;
+          .footer-col-2-content-left {
+            order: 2;
+            justify-content: center!important;
+          }
+
+          .footer-col-2-content-right {
+            order: 1;
+            justify-content: center!important;
+          }
         }
       }
     }
@@ -178,7 +197,15 @@
   }
 
   .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
     .list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
       .menu-item {
         font-size: var(--body-s-font-size);
         line-height: var(--body-line-height);

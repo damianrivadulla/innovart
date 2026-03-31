@@ -13,6 +13,7 @@ import { CurtainRevealComponent } from '../../shared/curtain-reveal/curtain-reve
 import ScrollReveal from 'scrollreveal';
 import { QUERY_HOME } from '../../queries/home';
 import { BaseComponentService } from '../../shared/services/base-component.service';
+import { SeoService } from '../../shared/services/seo.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -37,6 +38,7 @@ export class HomeComponent extends BaseComponentService implements OnInit {
   home: any;
 
   constructor(private readonly apollo: Apollo,
+              private seoService: SeoService,
               router: Router,
               elementRef: ElementRef,
               renderer: Renderer2) {
@@ -55,7 +57,9 @@ export class HomeComponent extends BaseComponentService implements OnInit {
     this.apollo.watchQuery({
       query: gql`${QUERY_HOME}`
     }).valueChanges.subscribe((result: any) => {
-      this.home = result.data.page.homeFields;
+      const page = result.data.page;
+      this.home = page.homeFields;
+      this.seoService.applySeo(page.seo, page.title);
     });
   }
 

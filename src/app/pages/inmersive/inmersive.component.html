@@ -1,0 +1,52 @@
+<div *ngIf="inmersive" [style.--text-color]="'#c7c5bd'" [style.--background-color]="'#1a1a1a'"
+  [style.--body-bg]="'#1a1a1a'" [style.--button-text-color]="'#c7c5bd'">
+  <app-header></app-header>
+  <app-layout>
+    <div class="wrapper wrapper--x-gap-45 wrapper--top-25 wrapper--bottom-45 wrapper-m--bottom-75">
+      <app-paragraph-reveal classSelector="title-big" *ngIf="inmersive?.title">
+        <h1 class="title title-big" [innerHTML]="inmersive?.title"></h1>
+      </app-paragraph-reveal>
+      <div class="container container--small container--push-right" *ngIf="inmersive?.description">
+        <p class="text fw-light" [innerHTML]="inmersive?.description"></p>
+      </div>
+    </div>
+
+    <!-- Main Image or Video (Full Width) -->
+    <div class="wrapper wrapper--x-x-0 wrapper--bottom-60 wrapper--m-top-50 wrapper--m-bottom-195"
+      *ngIf="inmersive?.mainImage?.node?.srcSet || inmersive?.mainVideo">
+      <div class="featured">
+        <div class="image-item" *ngIf="inmersive?.mainImage?.node?.srcSet">
+          <img class="img img--full" [srcset]="inmersive?.mainImage?.node?.srcSet"
+            [alt]="inmersive?.mainImage?.node?.title">
+        </div>
+        <div class="video-item" *ngIf="!inmersive?.mainImage?.node?.srcSet && inmersive?.mainVideo">
+          <iframe class="video img--full" [src]="embedUrlMainVideo" frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image with Description (Container) -->
+    <div class="container container--medium container--center">
+      <div class="wrapper wrapper--bottom-60 wrapper--m-top-50 wrapper--m-bottom-195"
+        *ngIf="inmersive?.image2?.node?.srcSet">
+        <div class="image-item">
+          <img class="img img--full" [srcset]="inmersive?.image2?.node?.srcSet" [alt]="inmersive?.image2?.node?.title">
+        </div>
+        <div class="container container--small" *ngIf="inmersive?.image2Description">
+          <p class="text fw-light" [innerHTML]="inmersive?.image2Description"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Gallery (Full Width) -->
+    <div class="wrapper wrapper--bottom-60 wrapper--m-top-50"
+      *ngIf="inmersive?.bottomGallery?.edges && inmersive?.bottomGallery?.edges.length > 0">
+      <div class="gallery">
+        <app-gallery-horizontal #gallery [gallery]="inmersive?.bottomGallery?.edges" [classCss]="'big'"
+          [showButtons]="true" [showButtonsOutside]="true" [showCaption]="true"></app-gallery-horizontal>
+      </div>
+    </div>
+  </app-layout>
+  <app-footer></app-footer>
+</div>

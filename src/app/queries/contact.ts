@@ -46,9 +46,10 @@ export const QUERY_CONTACT = `
       title
       contactFields {
         title
-        contactFormEmailTo
         contactFormSubjectOptions {
           option
+          emailTo
+          formId
         }
         howDidYouHearFromUs {
           option
