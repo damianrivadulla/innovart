@@ -10,9 +10,9 @@ import { GalleryTextHorizontalComponent } from '../../shared/gallery-text-horizo
 import { LineRevealComponent } from '../../shared/line-reveal/line-reveal.component';
 import { ParagraphRevealComponent } from '../../shared/paragraph-reveal/paragraph-reveal.component';
 import { CurtainRevealComponent } from '../../shared/curtain-reveal/curtain-reveal.component';
-import ScrollReveal from 'scrollreveal';
 import { QUERY_PORTFOLIO, QUERY_PORTFOLIO_INFO } from '../../queries/portfolio';
 import { BaseComponentService } from '../../shared/services/base-component.service';
+import { SeoService } from '../../shared/services/seo.service';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { map, Observable, startWith, tap } from 'rxjs';
 import { Router } from '@angular/router';
@@ -46,18 +46,11 @@ export class PortfolioComponent extends BaseComponentService implements OnInit {
   afterKey = null;
 
   constructor(private readonly apollo: Apollo,
+              private seoService: SeoService,
               router: Router,
               elementRef: ElementRef,
               renderer: Renderer2) {
     super(elementRef, renderer, router);
-  }
-
-  ngAfterViewInit(): void {
-    ScrollReveal().reveal('body', {
-      interval: 200,
-      duration: 1000,
-      viewFactor: .1,
-    });
   }
 
   ngOnInit(): void {
@@ -76,7 +69,9 @@ export class PortfolioComponent extends BaseComponentService implements OnInit {
     .valueChanges
     .subscribe((result: any) => {
       console.log("@==>", result.data.page);
-      this.portfolioInfo = result.data.page;
+      const page = result.data.page;
+      this.portfolioInfo = page;
+      this.seoService.applySeo(page?.seo, page?.title);
     });
   }
 

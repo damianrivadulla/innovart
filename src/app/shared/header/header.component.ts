@@ -1,5 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { AfterViewInit, Component, OnInit, HostListener } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { gql } from '@apollo/client/core';
 import { NgForOf, NgClass } from '@angular/common';
@@ -12,6 +12,7 @@ import ScrollReveal from 'scrollreveal';
   standalone: true,
   imports: [
     RouterLink,
+    RouterLinkActive,
     NgClass,
     NgForOf
   ],
@@ -23,6 +24,9 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   menuActive = false;
   classCss: string;
   classMenu: string;
+  headerVisible = true;
+  private lastScrollTop = 0;
+  private scrollThreshold = 10;
 
   constructor(private readonly apollo: Apollo,
               private dialog: MatDialog) {
@@ -40,7 +44,32 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  }
 
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Solo procesar si el scroll es mayor al umbral
+    if (Math.abs(currentScrollTop - this.lastScrollTop) < this.scrollThreshold) {
+      return;
+    }
+
+    if (currentScrollTop > this.lastScrollTop && currentScrollTop > 100) {
+      // Scroll hacia abajo - ocultar header
+      this.headerVisible = false;
+    } else if (currentScrollTop < this.lastScrollTop) {
+      // Scroll hacia arriba - mostrar header
+      this.headerVisible = true;
+    }
+
+    // Si estamos en el top de la página, siempre mostrar el header
+    if (currentScrollTop <= 0) {
+      this.headerVisible = true;
+    }
+
+    this.lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop;
   }  
 
   showMenu() {

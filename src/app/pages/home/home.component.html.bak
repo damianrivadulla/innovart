@@ -1,0 +1,73 @@
+<app-header *ngIf="home"></app-header>
+<app-layout *ngIf="home">
+  <div class="wrapper wrapper--x-gap-45 wrapper--top-25 wrapper--bottom-45 wrapper-m--bottom-75">
+    <app-paragraph-reveal classSelector="title-big">
+      <h1 class="title title-big" [innerHTML]="home?.title"></h1>
+    </app-paragraph-reveal>
+    <div class="container container--small container--push-right">
+      <p class="text">{{ home?.description }}</p>
+    </div>
+  </div>
+  <img class="img img--full" [srcset]="home?.mainImage?.node?.srcSet" [alt]="home?.mainImage?.node?.title">
+  <div class="wrapper wrapper--top-75 wrapper--m-top-25 wrapper--bottom-0 wrapper--m-bottom-195 height-unset">
+    <div class="work">
+      <div class="info">
+        <h2 class="title title-s min-w-m-410" [innerHTML]="home?.selectedWorkLabel"></h2>
+      </div>
+      <div class="gallery">
+        <a class="link title title-s" href="/portfolio" [innerHTML]="home?.viewAllWorkLabel"></a>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper wrapper--x-x-0 wrapper--top-30 wrapper-m--top-25 wrapper--m-right-0 wrapper--bottom-0"
+    *ngFor="let item of home?.selectedWork?.edges">
+    <app-line-reveal>
+      <div class="line line--m-mr horizontal"></div>
+    </app-line-reveal>
+    <div class="work">
+      <div class="info">
+        <div class="info-title">
+          <h3 class="text"><a class="link link--black" href="{{ item?.node?.uri }}">{{
+              item?.node?.portfolioSingleFields.title }}</a></h3>
+          <h4 class="text text-grey">{{ item?.node?.portfolioSingleFields.clientLocation }}</h4>
+        </div>
+        <div class="info-description">
+          <p class="text-m">{{ item?.node?.portfolioSingleFields.description }}</p>
+          <div class="info-box">
+            <div class="info-box-client"><span class="text-xs text-grey text-uppercase">Client</span>
+              <h4 class="text-s">{{ item?.node?.portfolioSingleFields.clientName }}</h4>
+            </div>
+
+            <div class="info-box-images">
+              <span class="text-xs text-grey text-uppercase">Images</span>
+              <label *ngIf="gallery" class="text-s caption">{{ gallery.currentIndex }}
+                of {{ gallery.totalSlides }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="gallery">
+        <app-gallery-horizontal #gallery [gallery]="item?.node?.portfolioSingleFields?.galleryGrid?.edges"
+          [showButtons]="false"></app-gallery-horizontal>
+      </div>
+    </div>
+  </div>
+  <div class="wrapper wrapper--x-x-0">
+    <app-line-reveal>
+      <div class="line horizontal"></div>
+    </app-line-reveal>
+  </div>
+  <div class="wrapper wrapper--m-top-75 wrapper--bottom-45 wrapper--m-bottom-75">
+    <div class="work work--free">
+      <div class="info">
+        <h2 class="title title-s w-min text-uppercase" [innerHTML]="home?.testimonialsLabel"></h2>
+      </div>
+      <div class="gallery">
+        <ng-container *ngIf="home">
+          <app-gallery-text-horizontal [gallery]="home?.testimonials?.edges"></app-gallery-text-horizontal>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</app-layout>
+<app-footer *ngIf="home"></app-footer>

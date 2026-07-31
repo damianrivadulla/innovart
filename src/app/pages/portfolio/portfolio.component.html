@@ -7,7 +7,7 @@
       </app-line-reveal>
     </div>
     <div
-      class="wrapper wrapper--x-gap-45 wrapper--bottom-30 wrapper--m-top-0 wrapper--m-bottom-25 min-h-400 d-flex flex-column justify-content-between gap-60">
+      class="wrapper wrapper--x-gap-45 wrapper--bottom-30 wrapper--m-top-0 wrapper--m-bottom-25 d-flex flex-column justify-content-between gap-60">
       <app-paragraph-reveal classSelector="title">
         <h1 class="title text-uppercase">{{ portfolioInfo?.portfolioFields?.title }}</h1>
       </app-paragraph-reveal>
@@ -32,7 +32,7 @@
         <div class="work">
           <div class="gallery">
             <app-gallery-horizontal #gallery
-                                    classCss="big"
+                                    classCss=""
                                     [gallery]="item?.node?.portfolioSingleFields?.galleryGrid?.edges"
                                     [showButtons]="false"
                                     (slideClicked)="redirectToPortfolio(item)"></app-gallery-horizontal>

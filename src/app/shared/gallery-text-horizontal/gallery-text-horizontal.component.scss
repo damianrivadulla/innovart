@@ -85,22 +85,28 @@
   .arrow{
     cursor: pointer;
     display: block;
-    width: 52px;
+    width: 54px;
+    height: 33px;
     svg {
+      width: 100%;
+      height: 100%;
+      display: block;
       rect {
+        fill: var(--text-color, #b9bab7) !important;
+        fill-opacity: 0;
         stroke: var(--text-color, #b9bab7) !important;
+        transition: fill-opacity .5s ease, stroke .5s ease, fill .5s ease;
       }
       path {
         fill: var(--text-color, #b9bab7) !important;
-      }
-      * {
-        transition: all .5s;
+        transition: fill .5s ease;
       }
     }
     &:hover{
       svg{
         rect,
         g rect {
+          fill-opacity: 1;
           stroke: var(--background-color, $white) !important;
           fill: var(--text-color, #b9bab7) !important;
         }

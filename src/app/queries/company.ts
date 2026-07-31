@@ -27,7 +27,6 @@ export const QUERY_COMPANY = `
       title
       companyFields {
         title
-        description
         story
         storyDescription
         values
@@ -35,10 +34,6 @@ export const QUERY_COMPANY = `
           subDescription
           subTitle
         }
-        mission
-        missionDescription
-        vision
-        visionDescription
         leadership
         leadershipDescription
         team {
@@ -61,13 +56,30 @@ export const QUERY_COMPANY = `
             node {
               ... on Client {
                 title
-                featuredImage {
-                  node {
-                    title
-                    altText
-                    sourceUrl
-                    srcSet
+                logos {
+                  logo {
+                    node {
+                      title
+                      altText
+                      sourceUrl
+                    }
                   }
+                  link
+                }
+              }
+            }
+          }
+        }
+        testimonialsLabel
+        testimonials {
+          edges {
+            node {
+              ... on Testimonial {
+                testimonialSingleFields {
+                  name
+                  title
+                  company
+                  description
                 }
               }
             }

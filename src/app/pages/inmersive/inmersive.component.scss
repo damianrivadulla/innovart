@@ -1,5 +1,46 @@
 @import "../../../variables";
 
+// Variables CSS personalizadas para colores dinámicos
+:host {
+    --text-color: #c7c5bd; 
+    --background-color: #1a1a1a;
+    --button-text-color: #c7c5bd; 
+}
+
+// Aplicar colores dinámicos a los elementos
+.title {
+    color: var(--text-color);
+}
+
+.text {
+    color: var(--text-color);
+}
+
+// Bloque principal de imagen/video (no está dentro de .project en el template)
+.featured {
+  overflow: hidden;
+
+  .image-item,
+  .video-item {
+    overflow: hidden;
+    transition: transform 0.7s ease;
+    aspect-ratio: 16 / 9;
+  }
+
+  img {
+    transition: transform 0.7s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .video-item iframe {
+    transition: transform 0.7s ease;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 .projects {
   display: grid;
   grid-template-columns: 1fr;

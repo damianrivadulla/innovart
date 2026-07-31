@@ -1,1 +1,147 @@
 @import "../../../variables";
+
+.work {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column-reverse;
+  gap: 15px;
+
+  &--free {
+    height: auto !important;
+    padding: 0 !important;
+    max-height: unset !important;
+
+    .gallery {
+      height: auto !important;
+      max-height: unset !important;
+    }
+  }
+
+  @media (max-width: $mq-tablet - 1px) {
+    padding: 0 30px;
+  }
+
+  @media (min-width: $mq-tablet) {
+    gap: 0;
+    flex-direction: row;
+    height: 39.4vw;
+  }
+
+  @media (min-width: $mq-wide) {
+    height: 630px;
+  }
+
+  .info {
+    @media (min-width: $mq-tablet) {
+      flex: 0 1 30%;
+      max-width: 410px;
+      padding-right: 60px;
+    }
+
+    @media (min-width: $mq-wide) {
+      flex: 0 1 410px;
+    }
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 25px;
+  }
+
+  .gallery {
+    min-height: 200px;
+    flex: 1 1 auto;
+
+    @media (min-width: $mq-tablet) {
+      flex-direction: row;
+      height: 100%;
+      max-height: unset;
+    }
+  }
+}
+
+.container--about {
+  .company-story {
+    margin: 0 0 1.2em;
+  }
+
+  .text {
+    p {
+      margin-bottom: 1.2em;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.company-capabilities {
+  .col-right {
+    display: block;
+    width: 100%;
+  }
+}
+
+.capabilities-columns {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: 100%;
+
+  @media (min-width: $mq-tablet) {
+    flex-direction: row;
+    gap: 40px 60px;
+  }
+}
+
+.capabilities-col {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  flex: 1 1 50%;
+}
+
+.capability {
+  h3 {
+    margin: 0 0 16px;
+  }
+}
+
+.capability-list {
+  line-height: 1.55;
+
+  br {
+    content: "";
+    display: block;
+    margin-bottom: 0.35em;
+  }
+}
+
+.company-founders {
+  --text-color: #c7c5bd;
+  --background-color: #1a1a1a;
+  background-color: var(--background-color);
+  color: var(--text-color);
+
+  .title,
+  .title-s,
+  .text {
+    color: var(--text-color);
+  }
+
+  .text-grey {
+    color: #8a8983;
+  }
+
+  .line {
+    background-color: #3a3a3a;
+  }
+
+  .button--plus {
+    &:before,
+    &:after {
+      background-color: #c7c5bd;
+    }
+  }
+}

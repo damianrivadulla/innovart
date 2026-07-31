@@ -142,7 +142,7 @@
   content: "";
   transition: all 1s;
   background-color: #fff;
-  height: 1px;
+  height: 0.9px;
   width: 0;
   display: block;
 }
@@ -150,7 +150,7 @@
   content: "";
   transition: all 1s;
   background-color: #fff;
-  height: 1px;
+  height: 0.9px;
   width: 0;
   display: block;
 }

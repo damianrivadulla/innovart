@@ -4,6 +4,12 @@
     z-index: 10;
     position: fixed;
     width: 100%;
+    transform: translateY(0);
+    transition: transform 0.3s ease-in-out;
+
+    &.header--hidden {
+        transform: translateY(-100%);
+    }
 
     .wrapper {
         background-color: var(--background-color, var(--body-bg));
@@ -69,15 +75,15 @@
         .list {
             display: flex;
             align-items: center;
-            gap: 35px;
+            gap: 20px;
 
             @media (min-width: $mq-desktop) {
-                gap: 70px;
+                gap: 30px;
             }
 
             .menu-item {
                 text-transform: uppercase;
-                font-size: var(--body-xs-font-size);
+                font-size: var(--body-s-font-size);
                 padding: 5px;
                 line-height: var(--body-line-height);
 
@@ -125,7 +131,7 @@
                         content: "";
                         transition: all 1s;
                         background-color: $white;
-                        height: 1px;
+                        height: 0.9px;
                         width: 0;
                         display: block;
                     }
@@ -135,7 +141,7 @@
                     content: "";
                     transition: all 1s;                    
                     background-color: $white;
-                    height: 1px;
+                    height: 0.9px;
                     width: 0;
                     display: block;
                 }

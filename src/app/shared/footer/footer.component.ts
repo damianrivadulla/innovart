@@ -49,4 +49,11 @@ export class FooterComponent implements OnInit, AfterViewInit {
       viewFactor: .1,
     });
   }
+
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 }

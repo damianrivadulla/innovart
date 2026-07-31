@@ -9,6 +9,7 @@ import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.co
 import { TermsOfSaleComponent } from './pages/terms-of-sale/terms-of-sale.component';
 import { WorkWithUsComponent } from './pages/work-with-us/work-with-us.component';
 import { SinglePortfolioComponent } from './pages/single-portfolio/single-portfolio.component';
+import { InmersiveComponent } from './pages/inmersive/inmersive.component';
 
 export const routes: Routes = [
   {
@@ -50,6 +51,10 @@ export const routes: Routes = [
       {
         path: 'work-with-us',
         component: WorkWithUsComponent
+      },
+      {
+        path: 'inmersive',
+        component: InmersiveComponent
       }
 
     ]
