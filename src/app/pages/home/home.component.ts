@@ -10,7 +10,6 @@ import { GalleryTextHorizontalComponent } from '../../shared/gallery-text-horizo
 import { LineRevealComponent } from '../../shared/line-reveal/line-reveal.component';
 import { ParagraphRevealComponent } from '../../shared/paragraph-reveal/paragraph-reveal.component';
 import { CurtainRevealComponent } from '../../shared/curtain-reveal/curtain-reveal.component';
-import ScrollReveal from 'scrollreveal';
 import { QUERY_HOME } from '../../queries/home';
 import { BaseComponentService } from '../../shared/services/base-component.service';
 import { SeoService } from '../../shared/services/seo.service';
@@ -43,14 +42,6 @@ export class HomeComponent extends BaseComponentService implements OnInit {
               elementRef: ElementRef,
               renderer: Renderer2) {
     super(elementRef, renderer, router);
-  }
-
-  ngAfterViewInit(): void {
-    ScrollReveal().reveal('body', {
-      interval: 200,
-      duration: 1000,
-      viewFactor: .1,
-    });
   }
 
   ngOnInit(): void {

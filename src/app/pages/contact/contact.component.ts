@@ -14,7 +14,6 @@ import { MUTATION_SEND_EMAIL, QUERY_CONTACT } from '../../queries/contact';
 import { BaseComponentService } from '../../shared/services/base-component.service';
 import { SeoService } from '../../shared/services/seo.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import ScrollReveal from 'scrollreveal';
 import { Router } from '@angular/router';
 
 @Component({
@@ -191,15 +190,6 @@ export class ContactComponent extends BaseComponentService implements OnInit {
         this.contactForm.get(key)?.updateValueAndValidity();
       }
     });
-  }
-
-  ngAfterViewInit(): void {
-    ScrollReveal().reveal('body', {
-      interval: 200,
-      duration: 1000,
-      viewFactor: .1,
-    });
-
   }
 
   ngOnInit(): void {

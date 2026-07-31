@@ -10,7 +10,6 @@ import { GalleryTextHorizontalComponent } from '../../shared/gallery-text-horizo
 import { LineRevealComponent } from '../../shared/line-reveal/line-reveal.component';
 import { ParagraphRevealComponent } from '../../shared/paragraph-reveal/paragraph-reveal.component';
 import { CurtainRevealComponent } from '../../shared/curtain-reveal/curtain-reveal.component';
-import ScrollReveal from 'scrollreveal';
 import { QUERY_COMPANY } from '../../queries/company';
 import { BaseComponentService } from '../../shared/services/base-component.service';
 import { SeoService } from '../../shared/services/seo.service';
@@ -36,6 +35,8 @@ import { Router } from '@angular/router';
 })
 export class CompanyComponent extends BaseComponentService implements OnInit {
   page: any;
+  capabilitiesLeft: any[] = [];
+  capabilitiesRight: any[] = [];
 
   constructor(private readonly apollo: Apollo,
               private seoService: SeoService,
@@ -45,26 +46,25 @@ export class CompanyComponent extends BaseComponentService implements OnInit {
     super(elementRef, renderer, router);
   }
 
-  ngAfterViewInit(): void {
-    ScrollReveal().reveal('body', {
-      interval: 200,
-      duration: 1000,
-      viewFactor: .1,
-    });
-  }
-
   ngOnInit(): void {
     this.apollo.watchQuery({
-      query: gql`${QUERY_COMPANY}`
+      query: gql`${QUERY_COMPANY}`,
+      fetchPolicy: 'network-only',
     }).valueChanges.subscribe((result: any) => {
-      console.log("@==>", result.data.page);
-      this.page = result.data.page;
+      this.page = result?.data?.page;
+      const items = this.page?.companyFields?.valuesItems ?? [];
+      this.capabilitiesLeft = items.slice(0, 2);
+      this.capabilitiesRight = items.slice(2);
       this.seoService.applySeo(this.page?.seo, this.page?.title);
     });
   }
 
-  toggleAccordion(event: any): void {
-    event.currentTarget.parentElement.parentElement.classList.toggle('active');
+  toggleAccordion(event: Event): void {
+    const target = event.target as HTMLElement;
+    if (target.closest('.accordion-content')) {
+      return;
+    }
+    (event.currentTarget as HTMLElement).classList.toggle('active');
   }
 
 }

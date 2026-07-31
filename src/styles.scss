@@ -618,6 +618,10 @@ table {
     max-width: 1200px;
   }
 
+  &--sm {
+    max-width: 1000px;
+  }
+
   &--small {
     max-width: 655px;
   }
@@ -636,7 +640,9 @@ table {
     &--push-right {
       margin-left: calc(50% + 15px);
     }
+  }
 
+  @media (min-width: $mq-desktop) {
     &--align-right {
       margin-left: auto;
     }
@@ -716,7 +722,7 @@ table {
 
 .line {
   background-color: var(--text-color, var(--border));
-  height: 1px;
+  height: 0.9px;
 
   &--mr {
     margin: 0 25px 0 0;
@@ -733,7 +739,7 @@ table {
   }
 
   &.horizontal {
-    height: 1px;
+    height: 0.9px;
   }
 
 }
@@ -891,46 +897,36 @@ table {
     &:before {
       top: 0;
       left: 50%;
-      width: 2px;
+      width: .9px;
       height: 100%;
-      margin-left: -1px;
-
-      @media (min-width: $mq-tablet) {
-        margin-left: -2px;
-        width: 4px;
-      }
+      margin-left: -0.5px;
     }
 
     /* horizontal line */
     &:after {
       top: 50%;
       left: 0;
-      height: 2px;
+      height: .9px;
       width: 100%;
-      margin-top: -1px;
-
-      @media (min-width: $mq-tablet) {
-        margin-top: -2px;
-        height: 4px;
-      }
+      margin-top: -0.5px;
     }
 
     &:hover {
       cursor: pointer;
-      /*
-      &:before {
-        transform: rotate(90deg);
-      }
-
-      &:after {
-        transform: rotate(180deg);
-      }
-*/
     }
   }
 }
 
 .accordion {
+  cursor: pointer;
+
+  // Sin row-gap cerrado: las filas de contenido siguen en el grid (para animar)
+  // y el gap vertical sumaba altura de más.
+  gap: 0 15px;
+
+  @media (min-width: $mq-tablet) {
+    gap: 0;
+  }
 
   .accordion-title {
     display: flex;
@@ -940,26 +936,37 @@ table {
     width: 100%;
   }
 
-  .accordion-content {
-    padding-bottom: 30px;
-
-    @media (min-width: $mq-tablet) {
-      padding-bottom: 100px;
-    }
-
-    display: none;
-    max-width: 800px;
-  }
-
   .accordion-content-left,
   .accordion-content-right {
-    display: none;
+    display: grid;
+    grid-template-rows: 0fr;
+    max-height: 0;
+    transition: grid-template-rows 0.45s ease, max-height 0.45s ease;
+    overflow: hidden;
+    // Sin esto el padding del content impone min-height al row del grid padre
+    min-height: 0;
+    align-self: start;
+    width: 100%;
+  }
+
+  .accordion-content {
+    overflow: hidden;
+    min-height: 0;
+    max-width: 800px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+
+    @media (min-width: $mq-tablet) {
+      padding-top: 50px;
+      padding-bottom: 50px;
+    }
   }
 
   @media (max-width: ($mq-tablet - 1px)) {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 45px 15px;
 
     .accordion-title {
       .title-s {
@@ -970,7 +977,7 @@ table {
       }
     }
 
-    .accordion-content-left {
+    .col-left.accordion-content-left:empty {
       display: none;
     }
 
@@ -980,13 +987,15 @@ table {
   }
 
   &.active {
-    .accordion-content {
-      display: block;
-    }
-
     .accordion-content-left,
     .accordion-content-right {
-      display: block;
+      grid-template-rows: 1fr;
+      max-height: 1200px;
+    }
+
+    .accordion-content {
+      opacity: 1;
+      cursor: auto;
     }
 
     .button {
@@ -1018,6 +1027,9 @@ table {
     display: flex;
     justify-content: center;
     align-items: center;
+    text-decoration: none;
+    color: inherit;
+    aspect-ratio: 305 / 184;
 
     @media (min-width: $mq-tablet) {
       padding: 20px;
@@ -1031,6 +1043,8 @@ table {
       display: block;
       width: 100%;
       max-width: 200px;
+      max-height: 70px;
+      object-fit: contain;
       mix-blend-mode: multiply;
       transition: all 1s;
     }
@@ -1043,6 +1057,18 @@ table {
 
 .form {
 
+  .line {
+    background-color: #696969;
+  }
+
+  /* Contact: columnas 50/50 en vez de 40/60 (grid-m-34) */
+  .grid-m-34 {
+    @media (min-width: $mq-desktop) {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px 0;
+    }
+  }
+
   .col-right {
     flex-direction: column;
   }
@@ -1054,7 +1080,7 @@ table {
 
   .form-wrap {
     align-items: center;
-    padding: 15px 0;
+    padding: 10px 0;
     gap: 0;
 
     @media (max-width: ($mq-desktop - 1px)) {
@@ -1065,16 +1091,12 @@ table {
     }
 
     &--extra {
-      padding: 45px 0;
+      padding: 30px 0;
     }
 
     @media (min-width: $mq-desktop) {
-      padding: 35px 0;
-    }
-
-
-    @media (min-width: $mq-desktop) {
-      gap: 60px;
+      padding: 18px 0;
+      gap: 40px;
     }
 
     .form-alert,
@@ -1083,7 +1105,7 @@ table {
       color: var(--text-color);
 
       @media (min-width: $mq-desktop) {
-        padding: 10px;
+        padding: 10px 0;
       }
     }
 
@@ -1093,7 +1115,8 @@ table {
     textarea {
       font-family: var(--body-font-family);
       font-weight: var(--body-font-weight);
-      line-height: var(--body-line-height);
+      line-height: var(--title-s-line-height);
+      letter-spacing: var(--title-s-letter-spacing);
       display: block;
       width: 100%;
       background: none;
@@ -1104,7 +1127,7 @@ table {
 
       @media (min-width: $mq-desktop) {
         font-size: var(--title-s-font-size);
-        padding: 10px;
+        padding: 0;
       }
 
       &:focus-visible {
@@ -1129,7 +1152,7 @@ table {
       flex-wrap: wrap;
       justify-content: flex-start;
       align-items: flex-start;
-      gap: 15px;
+      gap: 12px 48px;
     }
 
     .form-group {
@@ -1162,15 +1185,21 @@ table {
       background-image: url(/assets/icons/arrow-dropdown.svg);
       background-repeat: no-repeat;
       background-position: center right;
-      background-size: auto 18px;
+      background-size: auto 16px;
+      min-height: 1.1em;
 
-      @media (min-width: $mq-tablet) {
-        background-size: auto 35px;
+      @media (min-width: $mq-desktop) {
+        background-size: auto 28px;
+        min-height: var(--title-s-line-height);
       }
 
       select {
         appearance: none;
         -webkit-appearance: none;
+        font-size: var(--title-s-font-size);
+        line-height: var(--title-s-line-height);
+        font-weight: 300;
+        padding-right: 40px;
       }
     }
   }

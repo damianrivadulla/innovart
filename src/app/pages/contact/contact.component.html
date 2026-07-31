@@ -202,15 +202,14 @@
             </div>
           </div>
         </ng-container>
-        <div class="wrapper wrapper--x-0 wrapper--m-top-75 wrapper--m-bottom-75">
+        <div class="wrapper wrapper--x-0 wrapper--m-top-50 wrapper--m-bottom-50">
           <app-line-reveal>
             <div class="line horizontal"></div>
           </app-line-reveal>
         </div>
         <div class="d-grid grid-m-34 form-wrap form-wrap-m ">
           <div class="col-left">
-            <p class="text-m">{{ contact?.contactFields?.formNotice }}
-            </p>
+            <p class="text-m" *ngIf="contact?.contactFields?.formNotice">{{ contact?.contactFields?.formNotice }}</p>
           </div>
           <div class="col-right">
             <button type="submit"

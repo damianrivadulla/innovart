@@ -23,5 +23,10 @@ export class BaseComponentService {
     const uriSegments = this.router.url.split('/').join(' ');
     //this.renderer.setAttribute(bodyElement, 'class', `${className} ${uriSegments}`);
     this.renderer.setAttribute(bodyElement, 'class', `${uriSegments}`);
+    // ScrollReveal().reveal('body') deja visibility/opacity en el body; al navegar SPA hay que limpiarlo
+    bodyElement.style.removeProperty('visibility');
+    bodyElement.style.removeProperty('opacity');
+    bodyElement.style.removeProperty('transform');
+    bodyElement.style.removeProperty('transition');
   }
 }

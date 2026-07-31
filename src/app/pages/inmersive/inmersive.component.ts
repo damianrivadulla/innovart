@@ -9,7 +9,6 @@ import { FooterComponent } from '../../shared/footer/footer.component';
 import { GalleryHorizontalComponent } from '../../shared/gallery-horizontal/gallery-horizontal.component';
 import { LineRevealComponent } from '../../shared/line-reveal/line-reveal.component';
 import { ParagraphRevealComponent } from '../../shared/paragraph-reveal/paragraph-reveal.component';
-import ScrollReveal from 'scrollreveal';
 import { QUERY_INMERSIVE } from '../../queries/inmersive';
 import { BaseComponentService } from '../../shared/services/base-component.service';
 import { SeoService } from '../../shared/services/seo.service';
@@ -43,14 +42,6 @@ export class InmersiveComponent extends BaseComponentService implements OnInit, 
               renderer: Renderer2,
               public vimeoService: VimeoService) {
     super(elementRef, renderer, router);
-  }
-
-  ngAfterViewInit(): void {
-    ScrollReveal().reveal('body', {
-      interval: 200,
-      duration: 1000,
-      viewFactor: .1,
-    });
   }
 
   ngOnInit(): void {
