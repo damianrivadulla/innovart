@@ -34,6 +34,8 @@ export const QUERY_COMPANY = `
           subDescription
           subTitle
         }
+        process
+        processDescription
         leadership
         leadershipDescription
         team {
@@ -51,7 +53,7 @@ export const QUERY_COMPANY = `
         }
         clients
         clientsDescription
-        clientsLogos {
+        clientsLogos(first: 100) {
           edges {
             node {
               ... on Client {

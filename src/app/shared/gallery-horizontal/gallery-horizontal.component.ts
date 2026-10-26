@@ -2,6 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, 
 import { NgForOf, NgIf, NgClass } from '@angular/common';
 import Flickity from 'flickity';
 import { CurtainRevealComponent } from '../curtain-reveal/curtain-reveal.component';
+import { WpImgPipe } from '../pipes/wp-img.pipe';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,6 +13,7 @@ import { Router } from '@angular/router';
     CurtainRevealComponent,
     NgIf,
     NgClass,
+    WpImgPipe,
   ],
   templateUrl: './gallery-horizontal.component.html',
   styleUrl: './gallery-horizontal.component.scss'
@@ -24,6 +26,7 @@ export class GalleryHorizontalComponent implements AfterViewInit, OnChanges, OnD
   @Input() classCss: string;
   @Input() showButtons: boolean = false;
   @Input() showButtonsOutside: boolean = false;
+  @Input() showButtonsOnMobile: boolean = false;
   @Input() showCaption: boolean = false;
   currentIndex?: number;
   totalSlides?: number;

@@ -1,1 +1,54 @@
 @import "../../../variables";
+
+@media (max-width: ($mq-desktop - 1px)) {
+  .col-left {
+    display: none;
+  }
+}
+
+@media (max-width: ($mq-tablet - 1px)) {
+  .form-field--hide-mobile {
+    display: none;
+  }
+}
+
+.form-wrap.form-wrap--extra.form-radio {
+  padding-top: 0;
+  padding-bottom: 25px;
+}
+
+.form-radio {
+  @media (max-width: 480px) {
+    .align-inline {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      width: 100%;
+      gap: 8px 10px;
+      flex-wrap: nowrap;
+    }
+
+    .form-group[data-form="job"] {
+      grid-column: 1;
+      justify-self: start;
+    }
+
+    .form-group[data-form="careers"] {
+      grid-column: 2;
+      justify-self: center;
+    }
+
+    .form-group[data-form="partnership"] {
+      grid-column: 3;
+      justify-self: end;
+
+      label {
+        text-align: right;
+      }
+    }
+
+    label {
+      white-space: nowrap;
+    }
+  }
+}

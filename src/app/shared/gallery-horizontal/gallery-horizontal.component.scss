@@ -105,6 +105,12 @@
       display: none !important;
     }
 
+    &.mobile {
+      @media (max-width: ($mq-tablet - 1px)) {
+        display: flex !important;
+      }
+    }
+
     margin-top: 22px;
 
     .arrow {

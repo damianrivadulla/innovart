@@ -127,6 +127,15 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: var(--title-font-weight);
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -236,6 +245,12 @@ table {
   }
 }
 
+@media (max-width: ($mq-desktop - 1px)) {
+  .md-hidden {
+    display: none !important;
+  }
+}
+
 @media (min-width: $mq-tablet) {
   .s-hidden {
     display: none !important;
@@ -269,54 +284,108 @@ table {
 .title {
   font-size: var(--title-font-size);
   line-height: var(--title-line-height);
-  font-weight: var(--body-font-weight);
+  font-weight: var(--title-font-weight);
   letter-spacing: var(--title-letter-spacing);
 
   * {
     line-height: var(--title-line-height);
+    font-weight: inherit;
   }
 }
 
 .title-big {
   font-size: var(--title-big-font-size);
+  font-weight: var(--title-font-weight);
+
+  * {
+    font-weight: inherit;
+  }
 }
 
 .title-s {
   font-size: var(--title-s-font-size);
   line-height: var(--title-s-line-height);
-  font-weight: var(--body-font-weight);
+  font-weight: var(--title-font-weight);
   letter-spacing: var(--title-s-letter-spacing);
 
   * {
     line-height: var(--title-s-line-height);
+    font-weight: inherit;
   }
 }
 
 .title-xs {
   font-size: var(--title-xs-font-size);
   line-height: var(--title-xs-line-height);
-  font-weight: var(--body-font-weight);
+  font-weight: var(--title-font-weight);
   letter-spacing: var(--title-xs-letter-spacing);
 
   * {
     line-height: var(--title-xs-line-height);
+    font-weight: inherit;
   }
 }
 
 .text {
   font-size: var(--body-font-size);
+  font-weight: var(--body-font-weight);
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    cursor: pointer;
+    transition: opacity .3s;
+
+    @media (min-width: $mq-tablet) {
+      text-underline-offset: 6px;
+    }
+
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+
+  // Links que ya vienen con .link desde WP: no anular el underline
+  a.link {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+
+    @media (min-width: $mq-tablet) {
+      text-underline-offset: 6px;
+    }
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0 0 1.2em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .text-m {
   font-size: var(--body-m-font-size);
+  font-weight: var(--body-font-weight);
 }
 
 .text-s {
   font-size: var(--body-s-font-size);
+  font-weight: var(--body-font-weight);
 }
 
 .text-xs {
   font-size: var(--body-xs-font-size);
+  font-weight: var(--body-font-weight);
 }
 
 .text-black {
@@ -662,12 +731,6 @@ table {
   position: relative;
   overflow: hidden;
 
-  iframe {
-    width: 100%;
-    height: 100%;
-    display: block;
-  }
-
   // Aspect ratio 16:9 para videos
   &::before {
     content: '';
@@ -675,12 +738,24 @@ table {
     padding-top: 56.25%; // 16:9 aspect ratio
   }
 
-  iframe {
+  iframe,
+  video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    display: block;
+    border: 0;
+    object-fit: cover;
+  }
+
+  video {
+    pointer-events: none;
+
+    &::-webkit-media-controls {
+      display: none !important;
+    }
   }
 }
 
@@ -722,7 +797,7 @@ table {
 
 .line {
   background-color: var(--text-color, var(--border));
-  height: 0.9px;
+  height: 1px;
 
   &--mr {
     margin: 0 25px 0 0;
@@ -739,7 +814,7 @@ table {
   }
 
   &.horizontal {
-    height: 0.9px;
+    height: 1px;
   }
 
 }
@@ -1013,13 +1088,11 @@ table {
 }
 
 .logos {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-
-  @media (min-width: $mq-tablet) {
-    grid-template-columns: repeat(6, 1fr);
-  }
+  justify-content: flex-start;
+  align-items: center;
 
   .logo-img {
     transition: all 1s;
@@ -1029,29 +1102,38 @@ table {
     align-items: center;
     text-decoration: none;
     color: inherit;
+    box-sizing: border-box;
+    flex: 0 0 calc((100% - 20px) / 3);
+    width: calc((100% - 20px) / 3);
     aspect-ratio: 305 / 184;
+    overflow: visible;
 
     @media (min-width: $mq-tablet) {
       padding: 20px;
+      flex: 0 0 calc((100% - 50px) / 6);
+      width: calc((100% - 50px) / 6);
     }
 
     &:hover {
       background: $white;
+      background-color: #fff;
     }
 
     img {
       display: block;
-      width: 100%;
-      max-width: 200px;
-      max-height: 70px;
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 72px;
       object-fit: contain;
+      object-position: center;
       mix-blend-mode: multiply;
       transition: all 1s;
     }
+  }
 
-    &:hover {
-      background-color: #fff;
-    }
+  a.logo-img {
+    cursor: pointer;
   }
 }
 
@@ -1086,12 +1168,14 @@ table {
     @media (max-width: ($mq-desktop - 1px)) {
       &.form-wrap-m {
         gap: 75px;
-        padding-bottom: 45px;
+        padding-bottom: 0;
+        padding-top: 25px;
       }
     }
 
     &--extra {
-      padding: 30px 0;
+      padding-top: 0;
+      padding-bottom: 25px;
     }
 
     @media (min-width: $mq-desktop) {
@@ -1172,6 +1256,10 @@ table {
       width: auto;
       text-transform: uppercase;
       font-size: var(--body-font-size);
+
+      @media (max-width: ($mq-tablet - 1px)) {
+        text-transform: none;
+      }
     }
 
     input[type="radio"]:checked+label {
@@ -1264,7 +1352,9 @@ table {
   }
 }
 
-body.contact {
+body.contact,
+body.privacy-policy,
+body.terms-of-use {
   --text-color: #c7c5bd;
   --background-color: #1c1c1c;
   --button-text-color: #1c1c1c;
@@ -1324,6 +1414,10 @@ body.contact {
     .header {
       .js-mm-toggle {
         color: var(--text-color) !important;
+
+        &.active {
+          color: #808184 !important;
+        }
       }
 
       .nav {

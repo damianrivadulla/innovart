@@ -13,6 +13,7 @@ import { QUERY_INMERSIVE } from '../../queries/inmersive';
 import { BaseComponentService } from '../../shared/services/base-component.service';
 import { SeoService } from '../../shared/services/seo.service';
 import { VimeoService } from '../../shared/services/vimeo.service';
+import { WpImgPipe } from '../../shared/pipes/wp-img.pipe';
 import { Router } from '@angular/router';
 
 @Component({
@@ -26,6 +27,7 @@ import { Router } from '@angular/router';
     LineRevealComponent,
     ParagraphRevealComponent,
     FooterComponent,
+    WpImgPipe,
   ],
   templateUrl: './inmersive.component.html',
   styleUrl: './inmersive.component.scss'

@@ -106,6 +106,18 @@ export const QUERY_PORTFOLIO_SINGLE = (id: string) => `
           }
         }
         video5
+        repeater {
+          imageRepeater {
+            node {
+              altText
+              title
+              sourceUrl
+              srcSet
+            }
+          }
+          videoRepeater
+          positionRepeater
+        }
         description2
         bottomGallery {
           edges {

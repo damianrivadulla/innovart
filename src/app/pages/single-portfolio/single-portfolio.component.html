@@ -5,7 +5,7 @@
   <app-header></app-header>
   <app-layout>
     <div
-      class="wrapper wrapper--m-bottom-25 wrapper--m-top-0 d-flex flex-column justify-content-between gap-m-100">
+      class="wrapper arrival wrapper--m-bottom-25 wrapper--m-top-0 d-flex flex-column justify-content-between gap-m-100">
       <div class="d-flex justify-content-between gap-30">
         <div class="container container--medium">
           <app-paragraph-reveal classSelector="title">
@@ -18,17 +18,25 @@
         class="wrapper wrapper--left-0 wrapper--right-0 wrapper--top-0 wrapper--bottom-0 wrapper--m-bottom-50 grid-m-21">
         <div class="col-left">
           <div class="container container--small">
-            <p class="text" [innerHTML]="portfolio.portfolioSingleFields?.description"></p>
+            <div #arrivalDescription class="text arrival-description" [class.is-clamped]="descriptionClamped" [innerHTML]="portfolio.portfolioSingleFields?.description"></div>
+            <button *ngIf="showReadMore" type="button" class="read-more" (click)="expandDescription()">Read more</button>
           </div>
         </div>
         <div class="col-right">
           <div class="container container--small container--align-right width-100">
             <div class="categories" *ngIf="portfolio?.categories?.edges && portfolio?.categories?.edges.length > 0">
-              <ul class="categories-list">
+              <ul class="categories-list categories-list--flow">
                 <li class="category-item" *ngFor="let category of portfolio.categories.edges">
                   <span class="text text-s text-uppercase">{{ category.node.name }}</span>
                 </li>
               </ul>
+              <div class="categories-columns">
+                <ul class="categories-list" *ngFor="let column of categoryColumns">
+                  <li class="category-item" *ngFor="let category of column">
+                    <span class="text text-s text-uppercase">{{ category.node.name }}</span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -38,102 +46,145 @@
     <div class="wrapper wrapper--m-bottom-50 d-flex flex-column gap-50 gap-m-100">
       <div class="gallery">
         <app-gallery-horizontal #gallery [gallery]="portfolio?.portfolioSingleFields?.mainGallery?.edges"
-          [showButtons]="true" [showButtonsOutside]="true"></app-gallery-horizontal>
+          [showButtons]="true" [showButtonsOutside]="true" [showButtonsOnMobile]="true"></app-gallery-horizontal>
       </div>
       <div class="container container--small container--align-right">
-        <p class="text">{{ portfolio.portfolioSingleFields?.galleryDescription }}</p>
+        <div #galleryDescription class="text arrival-description" [class.is-clamped]="galleryClamped" [innerHTML]="portfolio.portfolioSingleFields?.galleryDescription"></div>
+        <button *ngIf="showGalleryReadMore" type="button" class="read-more" (click)="expandGalleryDescription()">Read more</button>
       </div>
     </div>
     <div class="wrapper wrapper--m-top-50 wrapper--bottom-0 wrapper--m-bottom-25"
       *ngIf="portfolio?.portfolioSingleFields?.image1?.node?.srcSet || portfolio?.portfolioSingleFields?.video1">
       <div class="images"
-        [ngClass]="{'images--left': portfolio?.portfolioSingleFields?.block1Position == 'left', 'images--right': portfolio?.portfolioSingleFields?.block1Position == 'right'}">
+        [ngClass]="{'images--left': portfolio?.portfolioSingleFields?.block1Position == 'left', 'images--right': portfolio?.portfolioSingleFields?.block1Position == 'right', 'images--center': portfolio?.portfolioSingleFields?.block1Position == 'center'}">
         <div class="image-item" *ngIf="portfolio?.portfolioSingleFields?.image1?.node?.srcSet">
-          <img class="img img--full" [srcset]="portfolio?.portfolioSingleFields?.image1?.node?.srcSet"
+          <img class="img img--full"
+            [attr.src]="portfolio?.portfolioSingleFields?.image1?.node | wpImg:'src'"
+            [attr.srcset]="portfolio?.portfolioSingleFields?.image1?.node | wpImg:'srcset'"
             [alt]="portfolio?.portfolioSingleFields?.image1?.node?.title">
         </div>
         <div class="video-item"
           *ngIf="!portfolio?.portfolioSingleFields?.image1?.node?.srcSet && portfolio?.portfolioSingleFields?.video1">
-          <iframe class="video img--full" [src]="embedUrlVideo1" frameborder="0"
+          <iframe *ngIf="embedUrlVideo1" class="video img--full" [src]="embedUrlVideo1" frameborder="0"
             allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <video *ngIf="fileUrlVideo1" class="video img--full" [src]="fileUrlVideo1"
+            autoplay muted loop playsinline [muted]="true" preload="auto" disablepictureinpicture></video>
         </div>
       </div>
     </div>
     <div class="wrapper wrapper--bottom-30 wrapper--m-top-0 wrapper--m-bottom-50"
       *ngIf="(portfolio?.portfolioSingleFields?.image2?.node?.srcSet && portfolio?.portfolioSingleFields?.image3?.node?.srcSet) || portfolio?.portfolioSingleFields?.video23">
       <div class="images images--inline"
-        [ngClass]="{'images--left': portfolio?.portfolioSingleFields?.block23Position == 'left', 'images--right': portfolio?.portfolioSingleFields?.block23Position == 'right'}">
+        [ngClass]="{'images--left': portfolio?.portfolioSingleFields?.block23Position == 'left', 'images--right': portfolio?.portfolioSingleFields?.block23Position == 'right', 'images--center': portfolio?.portfolioSingleFields?.block23Position == 'center'}">
         <ng-container
           *ngIf="portfolio?.portfolioSingleFields?.image2?.node?.srcSet && portfolio?.portfolioSingleFields?.image3?.node?.srcSet">
           <div class="image-item">
-            <img class="img img--full" [srcset]="portfolio?.portfolioSingleFields?.image2?.node?.srcSet"
+            <img class="img img--full"
+              [attr.src]="portfolio?.portfolioSingleFields?.image2?.node | wpImg:'src'"
+              [attr.srcset]="portfolio?.portfolioSingleFields?.image2?.node | wpImg:'srcset'"
               [alt]="portfolio?.portfolioSingleFields?.image2?.node?.title">
           </div>
           <div class="image-item">
-            <img class="img img--full" [srcset]="portfolio?.portfolioSingleFields?.image3?.node?.srcSet"
+            <img class="img img--full"
+              [attr.src]="portfolio?.portfolioSingleFields?.image3?.node | wpImg:'src'"
+              [attr.srcset]="portfolio?.portfolioSingleFields?.image3?.node | wpImg:'srcset'"
               [alt]="portfolio?.portfolioSingleFields?.image3?.node?.title">
           </div>
         </ng-container>
         <div class="video-item"
           *ngIf="(!portfolio?.portfolioSingleFields?.image2?.node?.srcSet || !portfolio?.portfolioSingleFields?.image3?.node?.srcSet) && portfolio?.portfolioSingleFields?.video23">
-          <iframe class="video img--full" [src]="embedUrlVideo23" frameborder="0"
+          <iframe *ngIf="embedUrlVideo23" class="video img--full" [src]="embedUrlVideo23" frameborder="0"
             allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <video *ngIf="fileUrlVideo23" class="video img--full" [src]="fileUrlVideo23"
+            autoplay muted loop playsinline [muted]="true" preload="auto" disablepictureinpicture></video>
         </div>
       </div>
     </div>
     <div class="wrapper wrapper--m-top-50 wrapper--m-bottom-50"
       *ngIf="portfolio?.portfolioSingleFields?.quote">
       <div class="testimonial">
-        <p class="testimonial-quote">"{{portfolio?.portfolioSingleFields?.quote}}"</p>
+        <div class="testimonial-quote" [innerHTML]="portfolio?.portfolioSingleFields?.quote"></div>
         <div class="testimonial-info">
           <span class="testimonial-name title-xs"
-            *ngIf="portfolio?.portfolioSingleFields?.quoteName">{{portfolio?.portfolioSingleFields?.quoteName}}</span>
+            *ngIf="portfolio?.portfolioSingleFields?.quoteName"
+            [innerHTML]="portfolio?.portfolioSingleFields?.quoteName"></span>
           <span class="testimonial-title text-s"
-            *ngIf="portfolio?.portfolioSingleFields?.quoteTitle">{{portfolio?.portfolioSingleFields?.quoteTitle}}</span>
+            *ngIf="portfolio?.portfolioSingleFields?.quoteTitle"
+            [innerHTML]="portfolio?.portfolioSingleFields?.quoteTitle"></span>
           <span class="testimonial-company text-s"
-            *ngIf="portfolio?.portfolioSingleFields?.quoteCompany">{{portfolio?.portfolioSingleFields?.quoteCompany}}</span>
+            *ngIf="portfolio?.portfolioSingleFields?.quoteCompany"
+            [innerHTML]="portfolio?.portfolioSingleFields?.quoteCompany"></span>
         </div>
       </div>
     </div>
     <div class="wrapper wrapper--m-top-50 wrapper--m-bottom-50"
-      *ngIf="portfolio?.portfolioSingleFields?.image4?.node?.srcSet || portfolio?.portfolioSingleFields?.video4 || portfolio?.portfolioSingleFields?.image5?.node?.srcSet || portfolio?.portfolioSingleFields?.video5">
+      *ngIf="portfolio?.portfolioSingleFields?.image4?.node?.srcSet || portfolio?.portfolioSingleFields?.video4 || portfolio?.portfolioSingleFields?.image5?.node?.srcSet || portfolio?.portfolioSingleFields?.video5 || portfolio?.portfolioSingleFields?.repeater?.length">
       <div class="images images--column"
-        [ngClass]="{'images--left': portfolio?.portfolioSingleFields?.block45Position == 'left', 'images--right': portfolio?.portfolioSingleFields?.block45Position == 'right'}">
+        *ngIf="portfolio?.portfolioSingleFields?.image4?.node?.srcSet || portfolio?.portfolioSingleFields?.video4 || portfolio?.portfolioSingleFields?.image5?.node?.srcSet || portfolio?.portfolioSingleFields?.video5"
+        [ngClass]="{'images--left': portfolio?.portfolioSingleFields?.block45Position == 'left', 'images--right': portfolio?.portfolioSingleFields?.block45Position == 'right', 'images--center': portfolio?.portfolioSingleFields?.block45Position == 'center'}">
         <div class="image-item" *ngIf="portfolio?.portfolioSingleFields?.image4?.node?.srcSet">
-          <img class="img img--full" [srcset]="portfolio?.portfolioSingleFields?.image4?.node?.srcSet"
+          <img class="img img--full"
+            [attr.src]="portfolio?.portfolioSingleFields?.image4?.node | wpImg:'src'"
+            [attr.srcset]="portfolio?.portfolioSingleFields?.image4?.node | wpImg:'srcset'"
             [alt]="portfolio?.portfolioSingleFields?.image4?.node?.title">
         </div>
         <div class="video-item"
           *ngIf="!portfolio?.portfolioSingleFields?.image4?.node?.srcSet && portfolio?.portfolioSingleFields?.video4">
-          <iframe class="video img--full" [src]="embedUrlVideo4" frameborder="0"
+          <iframe *ngIf="embedUrlVideo4" class="video img--full" [src]="embedUrlVideo4" frameborder="0"
             allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <video *ngIf="fileUrlVideo4" class="video img--full" [src]="fileUrlVideo4"
+            autoplay muted loop playsinline [muted]="true" preload="auto" disablepictureinpicture></video>
         </div>
         <div class="image-item" *ngIf="portfolio?.portfolioSingleFields?.image5?.node?.srcSet">
-          <img class="img img--full" [srcset]="portfolio?.portfolioSingleFields?.image5?.node?.srcSet"
+          <img class="img img--full"
+            [attr.src]="portfolio?.portfolioSingleFields?.image5?.node | wpImg:'src'"
+            [attr.srcset]="portfolio?.portfolioSingleFields?.image5?.node | wpImg:'srcset'"
             [alt]="portfolio?.portfolioSingleFields?.image5?.node?.title">
         </div>
         <div class="video-item"
           *ngIf="!portfolio?.portfolioSingleFields?.image5?.node?.srcSet && portfolio?.portfolioSingleFields?.video5">
-          <iframe class="video img--full" [src]="embedUrlVideo5" frameborder="0"
+          <iframe *ngIf="embedUrlVideo5" class="video img--full" [src]="embedUrlVideo5" frameborder="0"
             allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          <video *ngIf="fileUrlVideo5" class="video img--full" [src]="fileUrlVideo5"
+            autoplay muted loop playsinline [muted]="true" preload="auto" disablepictureinpicture></video>
         </div>
       </div>
+      <ng-container *ngFor="let item of portfolio?.portfolioSingleFields?.repeater; let i = index">
+        <div class="images images--column"
+          *ngIf="item?.imageRepeater?.node?.srcSet || item?.videoRepeater"
+          [ngClass]="{'images--left': item?.positionRepeater == 'left', 'images--right': item?.positionRepeater == 'right', 'images--center': item?.positionRepeater == 'center'}">
+          <div class="image-item" *ngIf="item?.imageRepeater?.node?.srcSet">
+            <img class="img img--full"
+              [attr.src]="item?.imageRepeater?.node | wpImg:'src'"
+              [attr.srcset]="item?.imageRepeater?.node | wpImg:'srcset'"
+              [alt]="item?.imageRepeater?.node?.title">
+          </div>
+          <div class="video-item"
+            *ngIf="!item?.imageRepeater?.node?.srcSet && item?.videoRepeater">
+            <iframe *ngIf="repeaterVideos[i]?.embed" class="video img--full" [src]="repeaterVideos[i].embed"
+              frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <video *ngIf="repeaterVideos[i]?.file" class="video img--full" [src]="repeaterVideos[i].file"
+              autoplay muted loop playsinline [muted]="true" preload="auto" disablepictureinpicture></video>
+          </div>
+        </div>
+      </ng-container>
     </div>
     <div class="wrapper wrapper--m-top-50 wrapper--m-bottom-50">
       <div class="container container--small">
-        <p class="text" [innerHTML]="portfolio.portfolioSingleFields?.description2"></p>
+        <div #detailDescription class="text arrival-description" [class.is-clamped]="detailClamped" [innerHTML]="portfolio.portfolioSingleFields?.description2"></div>
+        <button *ngIf="showDetailReadMore" type="button" class="read-more" (click)="expandDetailDescription()">Read more</button>
       </div>
     </div>
     <div class="wrapper wrapper--m-top-50 wrapper--m-bottom-50">
       <div class="gallery">
         <app-gallery-horizontal #gallery [gallery]="portfolio?.portfolioSingleFields?.bottomGallery?.edges"
-          [showButtons]="true" [showButtonsOutside]="true"></app-gallery-horizontal>
+          [showButtons]="true" [showButtonsOutside]="true" [showButtonsOnMobile]="true"></app-gallery-horizontal>
       </div>
     </div>
     <div class="wrapper wrapper--m-top-50 wrapper--m-bottom-50"
       *ngIf="nextProjectUri">
-      <div class="container d-flex justify-content-tablet-end">
-        <h2 class="title title-s w-min text-uppercase text-tablet-end">
+      <div class="container d-flex justify-content-end">
+        <h2 class="title title-s w-min text-uppercase text-end">
           <a class="link link--black" [routerLink]="nextProjectUri">Next<br>Project</a>
         </h2>
       </div>

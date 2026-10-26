@@ -1,4 +1,4 @@
-<header class="header" [ngClass]="{'header--hidden': !headerVisible}">
+<header class="header" [ngClass]="{'header--hidden': !headerVisible && !menuActive}">
   <div class="wrapper">
     <div class="logo" [ngClass]="classCss">
       <a routerLink="/">
@@ -20,7 +20,11 @@
     </div>
     <button type="button" (click)="openMenu()"
             class="flex s-hidden relative js-mm-toggle"
-            [ngClass]="classCss"><span class="open">Menu</span><span class="close">Close</span></button>
+            [ngClass]="classCss"
+            [attr.aria-label]="menuActive ? 'Close menu' : 'Open menu'"
+            [attr.aria-expanded]="menuActive">
+      <span class="mm-icon" aria-hidden="true"></span>
+    </button>
     <nav class="nav hidden s-flex" [ngClass]="classMenu">
       <ul class="list">
         <ng-container *ngFor="let item of menu">

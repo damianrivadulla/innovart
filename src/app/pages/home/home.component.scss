@@ -1,5 +1,11 @@
 @import "../../../variables";
 
+.title.title-big {
+  @media (min-width: $mq-desktop) {
+    margin-top: -9px;
+  }
+}
+
 .projects {
   display: grid;
   grid-template-columns: 1fr;
@@ -24,19 +30,47 @@
       overflow: hidden;
       transition: transform 0.7s ease;
       aspect-ratio: 16 / 9;
+
+      // Home ya define ratio con aspect-ratio; el ::before global sobraría altura
+      &::before {
+        content: none;
+        display: none;
+        padding-top: 0;
+      }
     }
 
-    img {
+    img,
+    video {
       transition: transform 0.7s ease;
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
 
+    .video-item {
+      video,
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
+        transition: transform 0.7s ease;
+      }
+
+      video {
+        display: block;
+
+        &::-webkit-media-controls {
+          display: none !important;
+        }
+      }
+    }
+
     iframe {
-      transition: transform 0.7s ease;
-      width: 100%;
-      height: 100%;
+      border: 0;
     }
   }
 
@@ -44,7 +78,8 @@
     .featured {
 
       .image-item img,
-      .video-item iframe {
+      .video-item iframe,
+      .video-item video {
         transform: scale(1.08);
       }
     }

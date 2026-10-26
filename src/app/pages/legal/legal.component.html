@@ -1,0 +1,24 @@
+<app-header></app-header>
+<app-layout *ngIf="current">
+  <div class="wrapper wrapper--top-50 wrapper--m-top-25">
+    <div class="line horizontal"></div>
+  </div>
+  <div class="accordion legal wrapper wrapper--top-0 wrapper--bottom-75 wrapper--m-bottom-125 grid-m-34 active" (click)="toggleAccordion($event)">
+    <div class="col-left">
+      <h1 class="title-s text-uppercase fw-light">{{ current.title }}</h1>
+    </div>
+    <div class="col-right">
+      <div class="accordion-title">
+        <h2 class="title-s text-grey fw-light">{{ updatedLabel }}</h2>
+        <div class="button button--plus"></div>
+      </div>
+    </div>
+    <div class="col-left accordion-content-left md-hidden"></div>
+    <div class="col-right accordion-content-left">
+      <div class="accordion-content">
+        <div class="text" [innerHTML]="bodyHtml"></div>
+      </div>
+    </div>
+  </div>
+</app-layout>
+<app-footer></app-footer>

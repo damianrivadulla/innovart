@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, Renderer2 } from '@angular/core';
 import { Apollo } from 'apollo-angular';
 import { gql } from '@apollo/client/core';
 import { JsonPipe, NgForOf, NgIf } from '@angular/common';
@@ -56,6 +56,7 @@ export class ContactComponent extends BaseComponentService implements OnInit {
   submitted: boolean | null = null;
   formValid : boolean;
   selectedFormId: string = '';
+  formRevealKey = 0;
 
   constructor(private readonly apollo: Apollo,
               private seoService: SeoService,
@@ -134,6 +135,33 @@ export class ContactComponent extends BaseComponentService implements OnInit {
     }
   }
 
+  optionLabel(option: string): string {
+    const text = (option || '').toLowerCase();
+    return text ? text.charAt(0).toUpperCase() + text.slice(1) : text;
+  }
+
+  tabSlot(item: { formId?: string; option?: string }): string {
+    const id = (item?.formId || '').toLowerCase();
+    if (id === 'job' || id === 'careers' || id === 'partnership') {
+      return id;
+    }
+    const label = (item?.option || '').toLowerCase();
+    if (label.includes('career')) {
+      return 'careers';
+    }
+    if (label.includes('partner')) {
+      return 'partnership';
+    }
+    if (label.includes('project')) {
+      return 'job';
+    }
+    return id;
+  }
+
+  private isMobileForm(): boolean {
+    return window.matchMedia('(max-width: 767px)').matches;
+  }
+
   shouldShowField(fieldName: string): boolean {
     const formId = this.getSelectedFormId();
     
@@ -160,15 +188,20 @@ export class ContactComponent extends BaseComponentService implements OnInit {
       }
     });
 
-    // Set validators based on form type
+    const mobile = this.isMobileForm();
+
+    // Set validators based on form type.
+    // On mobile, Position, "How did you hear from us?" and "About the project" are hidden.
     if (formId === 'job') {
       this.contactForm.get('name')?.setValidators([Validators.required]);
       this.contactForm.get('company')?.setValidators([Validators.required]);
-      this.contactForm.get('position')?.setValidators([Validators.required]);
       this.contactForm.get('email')?.setValidators([Validators.required, Validators.email]);
       this.contactForm.get('phone')?.setValidators([Validators.required]);
-      this.contactForm.get('hear')?.setValidators([Validators.required]);
-      this.contactForm.get('message')?.setValidators([Validators.required]);
+      if (!mobile) {
+        this.contactForm.get('position')?.setValidators([Validators.required]);
+        this.contactForm.get('hear')?.setValidators([Validators.required]);
+        this.contactForm.get('message')?.setValidators([Validators.required]);
+      }
     } else if (formId === 'careers') {
       this.contactForm.get('name')?.setValidators([Validators.required]);
       this.contactForm.get('email')?.setValidators([Validators.required, Validators.email]);
@@ -177,11 +210,13 @@ export class ContactComponent extends BaseComponentService implements OnInit {
     } else if (formId === 'partnership') {
       this.contactForm.get('company')?.setValidators([Validators.required]);
       this.contactForm.get('name')?.setValidators([Validators.required]);
-      this.contactForm.get('position')?.setValidators([Validators.required]);
       this.contactForm.get('email')?.setValidators([Validators.required, Validators.email]);
       this.contactForm.get('phone')?.setValidators([Validators.required]);
-      this.contactForm.get('hear')?.setValidators([Validators.required]);
       this.contactForm.get('collaborationDetails')?.setValidators([Validators.required]);
+      if (!mobile) {
+        this.contactForm.get('position')?.setValidators([Validators.required]);
+        this.contactForm.get('hear')?.setValidators([Validators.required]);
+      }
     }
 
     // Update validity for all fields
@@ -190,6 +225,11 @@ export class ContactComponent extends BaseComponentService implements OnInit {
         this.contactForm.get(key)?.updateValueAndValidity();
       }
     });
+  }
+
+  @HostListener('window:resize')
+  onWindowResize(): void {
+    this.updateFormValidators();
   }
 
   ngOnInit(): void {
@@ -216,6 +256,7 @@ export class ContactComponent extends BaseComponentService implements OnInit {
           }
         });
         this.updateFormValidators();
+        this.formRevealKey += 1;
       });
     });
   }

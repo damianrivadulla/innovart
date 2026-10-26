@@ -1,11 +1,11 @@
 <app-header *ngIf="home"></app-header>
 <app-layout *ngIf="home">
-  <div class="wrapper wrapper--x-gap-45 wrapper--top-25 wrapper--bottom-45 wrapper-m--bottom-75">
+  <div class="wrapper wrapper--x-gap-30 wrapper--m-top-0 wrapper--bottom-25 wrapper--m-bottom-75">
     <app-paragraph-reveal classSelector="title-big">
       <h1 class="title title-big" [innerHTML]="home?.title"></h1>
     </app-paragraph-reveal>
     <div class="container container--small container--push-right">
-      <p class="text">{{ home?.description }}</p>
+      <div class="text" [innerHTML]="home?.description"></div>
     </div>
   </div>
   <div class="projects wrapper wrapper--top-30 wrapper-m--top-25 wrapper--m-bottom-75">
@@ -13,8 +13,27 @@
       class="project"
       *ngFor="let item of home?.selectedWork?.edges">
       <div class="featured">
-        <div class="image-item" *ngIf="item?.node?.portfolioSingleFields?.portfolioImage?.node?.srcSet">
-          <img class="img img--full" [srcset]="item?.node?.portfolioSingleFields.portfolioImage?.node?.srcSet"
+        <div class="video-item" *ngIf="item?.node?.portfolioSingleFields?.portfolioVideoEmbed as videoSrc">
+          <iframe class="video img--full" [src]="videoSrc" frameborder="0"
+            allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="video-item" *ngIf="item?.node?.portfolioSingleFields?.portfolioVideoFile as videoFile">
+          <video
+            class="video img--full"
+            [src]="videoFile"
+            autoplay
+            muted
+            loop
+            playsinline
+            [muted]="true"
+            preload="auto"
+            disablepictureinpicture></video>
+        </div>
+        <div class="image-item"
+          *ngIf="!item?.node?.portfolioSingleFields?.portfolioVideo && item?.node?.portfolioSingleFields?.portfolioImage?.node?.srcSet">
+          <img class="img img--full"
+            [attr.src]="item?.node?.portfolioSingleFields.portfolioImage?.node | wpImg:'src'"
+            [attr.srcset]="item?.node?.portfolioSingleFields.portfolioImage?.node | wpImg:'srcset'"
             [alt]="item?.node?.portfolioSingleFields.portfolioImage?.node?.title">
         </div>
       </div>

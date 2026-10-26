@@ -1,12 +1,40 @@
 import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
+export type BackgroundVideoSource =
+  | { kind: 'file'; src: string }
+  | { kind: 'embed'; src: SafeResourceUrl };
+
 @Injectable({
   providedIn: 'root'
 })
 export class VimeoService {
 
   constructor(private sanitizer: DomSanitizer) { }
+
+  isDirectVideoUrl(value: string | null | undefined): boolean {
+    if (!value) {
+      return false;
+    }
+    return /\.(mp4|webm|ogg|mov)(\?|#|$)/i.test(value.trim());
+  }
+
+  /**
+   * Resuelve un campo de video (Vimeo o archivo local MP4/WebM/etc.) para fondo autoplay.
+   */
+  resolveBackgroundVideo(value: string | null | undefined): BackgroundVideoSource | null {
+    const trimmed = value?.trim();
+    if (!trimmed) {
+      return null;
+    }
+    if (this.isDirectVideoUrl(trimmed)) {
+      return { kind: 'file', src: trimmed.replace(/^http:\/\//i, 'https://') };
+    }
+    return {
+      kind: 'embed',
+      src: this.getVimeoEmbedUrlSafe(trimmed, { background: true }),
+    };
+  }
 
   /**
    * Convierte un ID o URL de Vimeo a una URL de embed del reproductor
@@ -37,7 +65,7 @@ export class VimeoService {
     // Si es una URL completa, extraer el ID
     const videoIdMatch = trimmed.match(/(?:vimeo\.com\/(?:video\/)?|player\.vimeo\.com\/video\/)(\d+)/);
     const videoId = videoIdMatch && videoIdMatch[1];
-    
+
     if (videoId) {
       return `https://player.vimeo.com/video/${videoId}?${params}`;
     }

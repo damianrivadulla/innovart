@@ -1,0 +1,45 @@
+@import "../../../variables";
+
+:host .line {
+  background-color: #3a3a3a;
+}
+
+.legal {
+  @media (min-width: $mq-desktop) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .title-s:not(.text-grey) {
+    color: var(--text-color);
+  }
+
+  .button--plus {
+    &:before,
+    &:after {
+      background-color: #c7c5bd;
+    }
+  }
+
+  .accordion-content-left,
+  .accordion-content-right {
+    max-height: none;
+  }
+
+  &:hover,
+  &.active {
+    .text-grey {
+      color: var(--text-color);
+      opacity: 1;
+    }
+  }
+
+  .accordion-content {
+    max-width: none;
+  }
+
+  @media (max-width: ($mq-tablet - 1px)) {
+    .col-right.accordion-content-left {
+      grid-column: 1 / -1;
+    }
+  }
+}

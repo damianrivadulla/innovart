@@ -2,12 +2,12 @@
   [style.--body-bg]="'#1a1a1a'" [style.--button-text-color]="'#c7c5bd'">
   <app-header></app-header>
   <app-layout>
-    <div class="wrapper wrapper--x-gap-45 wrapper--top-25 wrapper--bottom-45 wrapper-m--bottom-75">
-      <app-paragraph-reveal classSelector="title-big" *ngIf="inmersive?.title">
-        <h1 class="title title-big" [innerHTML]="inmersive?.title"></h1>
+    <div class="wrapper wrapper--x-gap-30 wrapper--m-top-0 wrapper--bottom-25 wrapper--m-bottom-75">
+      <app-paragraph-reveal classSelector="title" *ngIf="inmersive?.title">
+        <h1 class="title text-uppercase" [innerHTML]="inmersive?.title"></h1>
       </app-paragraph-reveal>
       <div class="container container--small container--push-right" *ngIf="inmersive?.description">
-        <p class="text fw-light" [innerHTML]="inmersive?.description"></p>
+        <div class="text fw-light" [innerHTML]="inmersive?.description"></div>
       </div>
     </div>
 
@@ -16,7 +16,9 @@
       *ngIf="inmersive?.mainImage?.node?.srcSet || inmersive?.mainVideo">
       <div class="featured">
         <div class="image-item" *ngIf="inmersive?.mainImage?.node?.srcSet">
-          <img class="img img--full" [srcset]="inmersive?.mainImage?.node?.srcSet"
+          <img class="img img--full"
+            [attr.src]="inmersive?.mainImage?.node | wpImg:'src'"
+            [attr.srcset]="inmersive?.mainImage?.node | wpImg:'srcset'"
             [alt]="inmersive?.mainImage?.node?.title">
         </div>
         <div class="video-item" *ngIf="!inmersive?.mainImage?.node?.srcSet && inmersive?.mainVideo">
@@ -31,10 +33,13 @@
       <div class="wrapper wrapper--bottom-60 wrapper--m-top-50 wrapper--m-bottom-195"
         *ngIf="inmersive?.image2?.node?.srcSet">
         <div class="image-item">
-          <img class="img img--full" [srcset]="inmersive?.image2?.node?.srcSet" [alt]="inmersive?.image2?.node?.title">
+          <img class="img img--full"
+            [attr.src]="inmersive?.image2?.node | wpImg:'src'"
+            [attr.srcset]="inmersive?.image2?.node | wpImg:'srcset'"
+            [alt]="inmersive?.image2?.node?.title">
         </div>
         <div class="container container--small" *ngIf="inmersive?.image2Description">
-          <p class="text fw-light" [innerHTML]="inmersive?.image2Description"></p>
+          <div class="text fw-light" [innerHTML]="inmersive?.image2Description"></div>
         </div>
       </div>
     </div>
