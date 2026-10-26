@@ -9,7 +9,8 @@
   --body-xs-font-size: 10px;
   --gutter: 1rem;
   --body-font-family: "NeueHaasGrotDisp", sans-serif;
-  --body-font-weight: 400;
+  --body-font-weight: 300;
+  --title-font-weight: 400;
   --body-line-height: 1.4em;
   --body-letter-spacing: .03em;
   --title-line-height: .97em;
@@ -63,7 +64,7 @@
   align-items: flex-start;
 }
 .header .logo {
-  width: 140px;
+  width: 160px;
   z-index: 2;
   transition: all 1s;
 }

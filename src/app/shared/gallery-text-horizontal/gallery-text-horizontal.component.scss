@@ -35,6 +35,19 @@
 
       .testimonial-quote{
         margin-bottom: 0;
+
+        &::before {
+          content: '"';
+        }
+
+        &::after {
+          content: '"';
+        }
+
+        p {
+          display: inline;
+          margin: 0;
+        }
       }
 
       .testimonial-info {
@@ -48,6 +61,11 @@
 
         .testimonial-company {
           color: $grey;
+        }
+
+        span p {
+          display: inline;
+          margin: 0;
         }
       }
     }

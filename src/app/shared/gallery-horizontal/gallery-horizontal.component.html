@@ -1,7 +1,8 @@
 <div #carousel class="main-carousel" [ngClass]="classCss">
   <div class="carousel-cell" *ngFor="let item of gallery">
     <app-curtain-reveal>
-      <img [srcset]="item?.node?.srcSet"
+      <img [attr.src]="item?.node | wpImg:'src'"
+           [attr.srcset]="item?.node | wpImg:'srcset'"
            [alt]="item?.node?.title">
     </app-curtain-reveal>
   </div>
@@ -9,8 +10,8 @@
 <ng-container *ngIf="showCaption">
   <div class="gallery-caption caption text" *ngIf="currentSlideLabel" [innerHTML]="currentSlideLabelHtml"></div>
 </ng-container>
-<ng-container *ngIf="showButtons">
-  <div class="arrows" [class.outside]="showButtonsOutside" [class.inside]="!showButtonsOutside">
+<ng-container *ngIf="showButtons && gallery?.length > 1">
+  <div class="arrows" [class.outside]="showButtonsOutside" [class.mobile]="showButtonsOnMobile" [class.inside]="!showButtonsOutside">
     <a class="arrow arrow-left" (click)="goToPrev()">
       <svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 53.95 32.44" width="54" height="33" preserveAspectRatio="xMidYMid meet">
         <g id="Content">

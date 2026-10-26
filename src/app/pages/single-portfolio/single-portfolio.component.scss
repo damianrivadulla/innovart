@@ -44,6 +44,14 @@
             margin-left: 20%;
         }
 
+        &--center {
+            // Explicit width needed: wrapper is grid; auto margins disable stretch
+            // and video-item aspect-ratio padding collapses without a definite width.
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         &--inline {
             flex-direction: row;
         }
@@ -68,6 +76,19 @@
 
     .testimonial-quote {
         margin-bottom: 0;
+
+        &::before {
+            content: '"';
+        }
+
+        &::after {
+            content: '"';
+        }
+
+        p {
+            display: inline;
+            margin: 0;
+        }
     }
 
     .testimonial-info {
@@ -75,6 +96,65 @@
         flex-direction: column;
         gap: 5px;
 
+        span p {
+            display: inline;
+            margin: 0;
+        }
+    }
+}
+
+.arrival-description {
+    @media (max-width: ($mq-tablet - 1px)) {
+        &.is-clamped {
+            max-height: calc(var(--body-line-height) * 5);
+            overflow: hidden;
+        }
+    }
+}
+
+:host ::ng-deep .arrival-description.is-clamped {
+    @media (max-width: ($mq-tablet - 1px)) {
+        p,
+        li {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.arrival {
+    @media (max-width: ($mq-tablet - 1px)) {
+        gap: 25px;
+    }
+}
+
+.read-more {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    margin-top: 25px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-color);
+    font: inherit;
+    font-size: var(--body-s-font-size);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+
+    &::before {
+        content: "";
+        width: 28px;
+        height: 1px;
+        background: currentColor;
+        flex: 0 0 auto;
+    }
+
+    @media (max-width: ($mq-tablet - 1px)) {
+        display: inline-flex;
     }
 }
 
@@ -84,15 +164,47 @@
         list-style: none;
         padding: 0;
         margin: 0;
-        /* Flujo continuo en 2 columnas: evita huecos de grid cuando un item ocupa 2 líneas */
         columns: 2;
         column-gap: 20px;
+
+    }
+
+    .categories-list--flow {
+        @media (max-width: ($mq-tablet - 1px)) {
+            display: none;
+        }
+    }
+
+    .categories-columns {
+        display: none;
+
+        @media (max-width: ($mq-tablet - 1px)) {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            column-gap: 20px;
+            align-items: start;
+
+            .categories-list {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                columns: unset;
+            }
+
+            .category-item {
+                margin-bottom: 0;
+            }
+        }
     }
     
     .category-item {
         line-height: 1;
         break-inside: avoid;
         margin-bottom: 10px;
+
+        @media (max-width: ($mq-tablet - 1px)) {
+            margin-bottom: 0;
+        }
 
         .text {
             display: flex;

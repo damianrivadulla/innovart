@@ -13,6 +13,8 @@ import { CurtainRevealComponent } from '../../shared/curtain-reveal/curtain-reve
 import { QUERY_HOME } from '../../queries/home';
 import { BaseComponentService } from '../../shared/services/base-component.service';
 import { SeoService } from '../../shared/services/seo.service';
+import { VimeoService } from '../../shared/services/vimeo.service';
+import { WpImgPipe } from '../../shared/pipes/wp-img.pipe';
 import { Router } from '@angular/router';
 
 @Component({
@@ -29,6 +31,7 @@ import { Router } from '@angular/router';
     ParagraphRevealComponent,
     FooterComponent,
     CurtainRevealComponent,
+    WpImgPipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -38,6 +41,7 @@ export class HomeComponent extends BaseComponentService implements OnInit {
 
   constructor(private readonly apollo: Apollo,
               private seoService: SeoService,
+              private vimeoService: VimeoService,
               router: Router,
               elementRef: ElementRef,
               renderer: Renderer2) {
@@ -46,10 +50,34 @@ export class HomeComponent extends BaseComponentService implements OnInit {
 
   ngOnInit(): void {
     this.apollo.watchQuery({
-      query: gql`${QUERY_HOME}`
+      query: gql`${QUERY_HOME}`,
+      fetchPolicy: 'network-only',
     }).valueChanges.subscribe((result: any) => {
       const page = result.data.page;
-      this.home = page.homeFields;
+      const homeFields = page.homeFields;
+      const edges = (homeFields?.selectedWork?.edges ?? []).map((edge: any) => {
+        const fields = edge?.node?.portfolioSingleFields ?? {};
+        const resolved = this.vimeoService.resolveBackgroundVideo(fields?.portfolioVideo);
+        return {
+          ...edge,
+          node: {
+            ...edge.node,
+            portfolioSingleFields: {
+              ...fields,
+              portfolioVideoFile: resolved?.kind === 'file' ? resolved.src : undefined,
+              portfolioVideoEmbed: resolved?.kind === 'embed' ? resolved.src : undefined,
+            },
+          },
+        };
+      });
+
+      this.home = {
+        ...homeFields,
+        selectedWork: {
+          ...homeFields?.selectedWork,
+          edges,
+        },
+      };
       this.seoService.applySeo(page.seo, page.title);
     });
   }

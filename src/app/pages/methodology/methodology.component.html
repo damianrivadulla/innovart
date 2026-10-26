@@ -6,17 +6,24 @@
         <div class="line horizontal"></div>
       </app-line-reveal>
     </div>
-    <div class="wrapper wrapper--top-0 wrapper--m-bottom-75">
-      <app-paragraph-reveal classSelector="title">
-        <h1 class="title text-uppercase">{{ page?.title }}</h1>
-      </app-paragraph-reveal>
+    <div class="wrapper wrapper--top-0 wrapper--bottom-30 wrapper--m-bottom-75">
+      <div class="container container--sm">
+        <app-paragraph-reveal classSelector="title">
+          <h1 class="title text-uppercase">{{ page?.title }}</h1>
+        </app-paragraph-reveal>
+      </div>
     </div>
   </ng-container>
-  <div class="wrapper wrapper--top-0 wrapper--m-bottom-195 d-flex flex-column justify-content-between">
-    <div class="container container--medium">
-      <p class="text">Since 2003, we have partnered with our clients to build and differentiate their brands, whit a
-        unique methodology distinctive approach defined by honesty, driven by insights, and focused on integrated brand
-        strategy.</p>
+  <div class="wrapper wrapper--top-0 wrapper--bottom-60 wrapper--m-bottom-195 grid-m-34">
+    <div class="col-left md-hidden"></div>
+    <div class="col-right">
+      <div class="container container--small">
+        <div class="text">
+          <p>Since 2003, we have partnered with our clients to build and differentiate their brands, whit a
+            unique methodology distinctive approach defined by honesty, driven by insights, and focused on integrated brand
+            strategy.</p>
+        </div>
+      </div>
     </div>
   </div>
 </app-layout>

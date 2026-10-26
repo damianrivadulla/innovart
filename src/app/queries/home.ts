@@ -54,6 +54,7 @@ export const QUERY_HOME = `
                       srcSet
                     }
                   }
+                  portfolioVideo
                   name
                   location
                   voiceTone

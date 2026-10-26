@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, HostListener } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { Apollo } from 'apollo-angular';
 import { gql } from '@apollo/client/core';
@@ -19,7 +19,7 @@ import ScrollReveal from 'scrollreveal';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit, AfterViewInit {
+export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   menu: any = null
   menuActive = false;
   classCss: string;
@@ -27,6 +27,8 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   headerVisible = true;
   private lastScrollTop = 0;
   private scrollThreshold = 10;
+  private lockedScrollY = 0;
+  private scrollLocked = false;
 
   constructor(private readonly apollo: Apollo,
               private dialog: MatDialog) {
@@ -49,6 +51,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
+    if (this.menuActive) {
+      this.headerVisible = true;
+      return;
+    }
+
     const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
     
     // Solo procesar si el scroll es mayor al umbral
@@ -84,13 +91,47 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     }, 1);*/
   }
 
+  ngOnDestroy(): void {
+    this.unlockScroll();
+  }
+
   openMenu() {
     if(this.menuActive){
       this.menuActive = false;
       this.classCss = "";
+      this.unlockScroll();
     } else{
+      this.headerVisible = true;
       this.menuActive = true;
       this.classCss = "active";
+      this.lockScroll();
     }
+  }
+
+  private lockScroll(): void {
+    this.lockedScrollY = window.scrollY;
+    this.scrollLocked = true;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${this.lockedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  }
+
+  private unlockScroll(): void {
+    if (!this.scrollLocked) {
+      return;
+    }
+    const scrollY = this.lockedScrollY;
+    this.scrollLocked = false;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    this.lastScrollTop = scrollY;
+    window.scrollTo(0, scrollY);
   }
 }

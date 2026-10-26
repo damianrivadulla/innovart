@@ -53,8 +53,16 @@ export class CompanyComponent extends BaseComponentService implements OnInit {
     }).valueChanges.subscribe((result: any) => {
       this.page = result?.data?.page;
       const items = this.page?.companyFields?.valuesItems ?? [];
-      this.capabilitiesLeft = items.slice(0, 2);
-      this.capabilitiesRight = items.slice(2);
+      const left = items.slice(0, 2);
+      const right = items.slice(2);
+      const digitalIndex = right.findIndex((item: { subTitle?: string }) =>
+        (item?.subTitle || '').trim().toUpperCase() === 'DIGITAL'
+      );
+      if (digitalIndex > -1) {
+        left.push(right.splice(digitalIndex, 1)[0]);
+      }
+      this.capabilitiesLeft = left;
+      this.capabilitiesRight = right;
       this.seoService.applySeo(this.page?.seo, this.page?.title);
     });
   }

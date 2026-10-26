@@ -1,12 +1,7 @@
 <app-header *ngIf="contact"></app-header>
 <app-layout *ngIf="contact">
-  <div class="wrapper x-hidden">
-    <app-line-reveal>
-      <div class="line horizontal"></div>
-    </app-line-reveal>
-  </div>
   <div
-    class="wrapper wrapper--x-gap-45 wrapper--bottom-30 wrapper--m-top-0 wrapper--m-bottom-75 d-flex flex-column justify-content-between gap-100">
+    class="wrapper wrapper--x-gap-45 wrapper--bottom-25 wrapper--m-top-0 wrapper--m-bottom-75 d-flex flex-column justify-content-between gap-100">
     <app-paragraph-reveal classSelector="title">
       <h1 class="title text-uppercase" [innerHTML]="contact?.contactFields?.title"></h1>
     </app-paragraph-reveal>
@@ -15,14 +10,14 @@
     <div class="form">
       <form *ngIf="!success" [formGroup]="contactForm" (ngSubmit)="sendForm()">
         <div class="d-grid grid-m-34 form-wrap form-wrap--extra form-radio ">
-          <div class="col-left x-hidden">
+          <div class="col-left md-hidden">
           </div>
           <div class="col-right">
             <div class="align-inline">
               <ng-container *ngFor="let item of contact.contactFields.contactFormSubjectOptions">
-                <div class="form-group">
+                <div class="form-group" [attr.data-form]="tabSlot(item)">
                   <input type="radio" formControlName="type" [id]="item.option" name="type" [value]="item.option" required>
-                  <label [for]="item.option">{{ item.option }}</label><br>
+                  <label [for]="item.option">{{ optionLabel(item.option) }}</label><br>
                 </div>
               </ng-container>
             </div>
@@ -33,6 +28,7 @@
           </div>
         </div>
         <!-- Name field - shown for job, careers, partnership -->
+        <ng-container *ngFor="let revealKey of [formRevealKey]">
         <ng-container *ngIf="shouldShowField('name')">
           <app-line-reveal>
             <div class="line horizontal"></div>
@@ -68,8 +64,9 @@
           </div>
         </ng-container>
 
-        <!-- Position field - shown for job, partnership -->
+        <!-- Position field - shown for job, partnership. Hidden on mobile. -->
         <ng-container *ngIf="shouldShowField('position')">
+          <div class="form-field form-field--hide-mobile">
           <app-line-reveal>
             <div class="line horizontal"></div>
           </app-line-reveal>
@@ -83,6 +80,7 @@
                 <span class="form-error">Please include your position.</span>
               </ng-container>
             </div>
+          </div>
           </div>
         </ng-container>
 
@@ -123,8 +121,9 @@
           </div>
         </ng-container>
 
-        <!-- How did you hear from us - shown for job, partnership -->
+        <!-- How did you hear from us - shown for job, partnership. Hidden on mobile. -->
         <ng-container *ngIf="shouldShowField('hear')">
+          <div class="form-field form-field--hide-mobile">
           <app-line-reveal>
             <div class="line horizontal"></div>
           </app-line-reveal>
@@ -143,6 +142,7 @@
                 <span class="form-error">Please select one option.</span>
               </ng-container>
             </div>
+          </div>
           </div>
         </ng-container>
 
@@ -165,8 +165,9 @@
           </div>
         </ng-container>
 
-        <!-- Message/Brief field - shown for job -->
+        <!-- Message/Brief field - shown for job. Hidden on mobile. -->
         <ng-container *ngIf="shouldShowField('message')">
+          <div class="form-field form-field--hide-mobile">
           <app-line-reveal>
             <div class="line horizontal"></div>
           </app-line-reveal>
@@ -181,6 +182,7 @@
                 <span class="form-error">Please include your Brief/Need.</span>
               </ng-container>
             </div>
+          </div>
           </div>
         </ng-container>
 
@@ -202,11 +204,7 @@
             </div>
           </div>
         </ng-container>
-        <div class="wrapper wrapper--x-0 wrapper--m-top-50 wrapper--m-bottom-50">
-          <app-line-reveal>
-            <div class="line horizontal"></div>
-          </app-line-reveal>
-        </div>
+        </ng-container>
         <div class="d-grid grid-m-34 form-wrap form-wrap-m ">
           <div class="col-left">
             <p class="text-m" *ngIf="contact?.contactFields?.formNotice">{{ contact?.contactFields?.formNotice }}</p>
@@ -224,7 +222,7 @@
         </div>   
       </form>
       <div *ngIf="submitted" class="d-grid grid-m-34 form-wrap form-wrap-m ">
-        <div class="col-left">
+        <div class="col-left md-hidden">
         </div>
         <div class="col-right">
           <span class="form-error" *ngIf="submitted && !success">Please complete the required fields.</span>

@@ -26,6 +26,7 @@ export class FooterComponent implements OnInit, AfterViewInit {
   footerInfo: any = null;
   menuA: any = null
   menuB: any = null
+  currentYear = new Date().getFullYear();
   
   constructor(private readonly apollo: Apollo) {
   }

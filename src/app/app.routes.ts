@@ -5,8 +5,7 @@ import { CompanyComponent } from './pages/company/company.component';
 import { PortfolioComponent } from './pages/portfolio/portfolio.component';
 import { MethodologyComponent } from './pages/methodology/methodology.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { PrivacyPolicyComponent } from './pages/privacy-policy/privacy-policy.component';
-import { TermsOfSaleComponent } from './pages/terms-of-sale/terms-of-sale.component';
+import { LegalComponent } from './pages/legal/legal.component';
 import { WorkWithUsComponent } from './pages/work-with-us/work-with-us.component';
 import { SinglePortfolioComponent } from './pages/single-portfolio/single-portfolio.component';
 import { InmersiveComponent } from './pages/inmersive/inmersive.component';
@@ -42,19 +41,29 @@ export const routes: Routes = [
       },
       {
         path: 'privacy-policy',
-        component: PrivacyPolicyComponent
+        component: LegalComponent
+      },
+      {
+        path: 'terms-of-use',
+        component: LegalComponent
       },
       {
         path: 'terms-of-sale',
-        component: TermsOfSaleComponent
+        redirectTo: 'terms-of-use',
+        pathMatch: 'full'
       },
       {
         path: 'work-with-us',
         component: WorkWithUsComponent
       },
       {
-        path: 'inmersive',
+        path: 'renderings',
         component: InmersiveComponent
+      },
+      {
+        path: 'inmersive',
+        redirectTo: 'renderings',
+        pathMatch: 'full'
       }
 
     ]

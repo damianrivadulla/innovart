@@ -12,7 +12,7 @@
         <h1 class="title text-uppercase">{{ portfolioInfo?.portfolioFields?.title }}</h1>
       </app-paragraph-reveal>
       <div class="container container--small">
-        <p class="text">{{ portfolioInfo?.portfolioFields?.description }}</p>
+        <div class="text" [innerHTML]="portfolioInfo?.portfolioFields?.description"></div>
       </div>
     </div>
   </ng-container>
